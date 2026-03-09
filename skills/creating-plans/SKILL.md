@@ -1,19 +1,23 @@
 ---
 name: creating-plans
-description: "Creates detailed implementation plans through interactive research and iteration. Use when you say: 'plan this feature', 'create a plan', 'write an implementation spec', 'design doc for...', 'technical spec', 'plan the rollout for...'."
+description: "Creates detailed specification-first implementation plans through interactive research and iteration. Use when you say: 'plan this feature', 'create a plan', 'write an implementation spec', 'design doc for...', 'technical spec', 'plan the rollout for...'."
 ---
 
 # Creating Plans
 
-Create detailed implementation plans through interactive, iterative research. Be skeptical, thorough, and collaborative.
+Create detailed implementation plans through interactive, iterative research. Be skeptical, thorough, and collaborative. The specification is the source of truth: phases, tests, and verification must all trace back to explicit contracts.
 
 ## Getting Started
 
-1. **If a file path or ticket was provided**: read it fully and begin research
-2. **If no input provided**, ask:
+1. **If a file path, ticket, or specification was provided**: read it fully and begin research
+2. **Identify the contracts that will change**:
+   - If an implementation-independent specification already exists, use it
+   - If the task changes behavior and no specification exists yet, invoke `writing-specifications` before designing phases
+   - If the intended behavior is ambiguous, resolve that ambiguity before planning
+3. **If no input provided**, ask:
    - The task/ticket description or reference
    - Any relevant context, constraints, or requirements
-   - Links to related research or previous implementations
+   - Links to related specifications, research, or previous implementations
 
 ## Workflow
 
@@ -23,32 +27,81 @@ Create detailed implementation plans through interactive, iterative research. Be
 2. **Research the codebase**:
    - Use `finder` to locate all files related to the task
    - Use `Read` to understand current implementations
-   - Search for existing research or plan documents in the project's docs directory
+   - Search for existing research, plan, or specification documents in the project's docs directory
 3. **Read all files identified by research** into main context
 4. **Present informed understanding** with file:line references and ask only questions that research couldn't answer
 
-### Step 2: Research & Discovery
+### Step 2: Establish the Specification
 
-After getting clarifications:
+Before designing phases:
+
+1. Identify each new or changed contract the work will touch
+2. Link the existing specification sections that govern those contracts, or write/refine them with `writing-specifications`
+3. If a contract introduces a new domain type, include its type definition in the specification and make illegal states unrepresentable; prefer branded or opaque types over raw primitives
+4. Separate **contract changes** from **implementation changes**
+5. Reject plans that would change behavior without an explicit specification delta
+
+### Step 3: Research & Discovery
+
+After the specification is clear:
 
 1. If the user corrects a misunderstanding, **verify with new research** — don't blindly accept
 2. Investigate further as needed:
    - Find similar features and patterns to model after
    - Understand integration points and dependencies
    - Extract insights from existing research or decision documents
+   - Determine whether existing untested code will need delete-and-rebuild treatment under `specification-driven-tdd`
 3. Present findings, design options with pros/cons, and open questions
 
-### Step 3: Plan Structure
+### Step 4: Plan Structure
 
-Present the proposed phase structure and get feedback before writing details:
+Present the proposed phase structure and get feedback before writing details. Every phase must map to a specific specification slice and its contract tests. The plan must cover the whole contract for that phase, including outputs, documented errors, mutations, and side effects, while making clear that implementation proceeds one RED-GREEN-REFACTOR test at a time.
+
+Each phase must also be self-contained. An agent handed only that phase should have everything needed to execute it independently: governing spec, relevant files, dependencies, constraints, contract-test inventory, execution order, and verification steps.
+
+The plan must also make chunk dependencies explicit. Treat each phase as an execution chunk unless you explicitly split it further. For every chunk, state what it depends on, what it unblocks, and which sibling chunks can run in parallel once prerequisites are satisfied. Parallel execution is the preferred default whenever dependencies allow it, so actively shape the plan to maximize independent chunks. When parallel execution is viable, call out that `using-jj-workspaces` should be used.
+
+Use the following outline by default unless the user explicitly requests a different structure. Keep the section order stable.
 
 ```
-## Implementation Phases:
-1. [Phase name] - [what it accomplishes]
-2. [Phase name] - [what it accomplishes]
+## Review Outcome
+## Global Contract Rules
+## Overview
+## Current State Analysis
+### What Exists Today
+### Gaps Blocking Implementation
+## Desired End State
+## End-State Verification
+## Locked Decisions
+## What We Are Not Doing
+## Version Control Workflow (Jujutsu)
+## Parallel Execution Strategy
+### Chunk Dependency Map
+#### Chunk N: [Descriptive Name]
+
+## Phase N: [Descriptive Name]
+### Goal
+### Phase Execution Rules
+### Specifications / Workflow Specification / Workflow Specifications
+#### Contract N.1: ...
+### Step Specifications
+#### Contract N.X: ...
+### Contract Coverage Checklist
+#### Contract N.1 checklist
+### Specification-Driven TDD Workflow
+### Files
+### Phase Gate
+
+## Cross-Phase Test Strategy
+### Unit Contracts
+### Integration Contracts
+### E2E Contracts
+
+## Migration Notes
+## References
 ```
 
-### Step 4: Write the Plan
+### Step 5: Write the Plan
 
 Save to the project's plans directory as `YYYY-MM-DD-description.md` (e.g., `docs/plans/`). Add a ticket ID prefix if one exists.
 
@@ -57,81 +110,159 @@ Use this template:
 ````markdown
 # [Feature/Task Name] Implementation Plan
 
+## Review Outcome
+[Short statement of the current review state, recommendation, and whether the plan is ready to implement]
+
+## Global Contract Rules
+- [Rule that applies across all phases]
+- [Include one-test-at-a-time RED-GREEN-REFACTOR execution here]
+- [Include spec-first and observable-contract-only test rules here]
+- [When a contract introduces a new type, include a type definition that makes illegal states unrepresentable and use branded/opaque domain types by default]
+
 ## Overview
 [Brief description of what we're implementing and why]
 
 ## Current State Analysis
-[What exists now, what's missing, key constraints discovered]
+### What Exists Today
+- [Current behavior or system capability]
+- [Relevant file:line references]
+
+### Gaps Blocking Implementation
+- [Missing invariant, workflow, schema, command, or UX behavior]
+- [Why the gap matters]
 
 ## Desired End State
-[Specification of the desired end state and how to verify it]
+[Specification of the desired end state]
 
-### Key Discoveries:
-- [Important finding with file:line reference]
+## End-State Verification
+- [Observable outcome that must be true at the end]
+- [Release or verification command]
 
-## What We're NOT Doing
+## Locked Decisions
+- [Decision already made and not reopened by this plan]
+
+## What We Are Not Doing
 [Explicitly list out-of-scope items]
 
-## Implementation Approach
-[High-level strategy and reasoning]
+## Version Control Workflow (Jujutsu)
+- Before writing the plan, check for a clean working copy with `jj status`
+- If the working copy is not clean, describe the existing changes, then run `jj new` to start from a clean working copy before editing the plan
+- After writing the plan, run `jj describe` with a message describing what the plan covers
+- [Any additional bookmark or review rule]
+
+## Parallel Execution Strategy
+### Chunk Dependency Map
+Use this section to make parallel work the default execution model whenever dependencies allow it.
+#### Chunk 1: [Descriptive Name]
+- Depends on: [`none` or earlier chunk IDs / completed prerequisites]
+- Unblocks: [later chunk IDs or `none`]
+- Parallelizable with: [chunk IDs that can proceed at the same time once dependencies are satisfied, or `none`]
+- Workspace strategy: [whether `using-jj-workspaces` should be used for this chunk]
+
+#### Chunk 2: [Descriptive Name]
+- Depends on: [earlier chunk IDs / completed prerequisites]
+- Unblocks: [later chunk IDs or `none`]
+- Parallelizable with: [chunk IDs or `none`]
+- Workspace strategy: [whether `using-jj-workspaces` should be used for this chunk]
+
+---
 
 ## Phase 1: [Descriptive Name]
 
-### Overview
-[What this phase accomplishes]
+### Goal
+[One-paragraph statement of what this phase achieves]
 
-### Changes Required:
+### Phase Execution Rules
+- Governing specifications: `[path/to/spec]`
+- Required context: [ticket, research finding, or business rule needed to execute this phase]
+- Dependencies / prerequisites: [earlier phase output, migration, feature flag, fixture, env var, or `none`]
+- Chunk dependencies: [chunk IDs or phase names that must be complete before this work starts]
+- Unblocks: [chunk IDs or phase names that become available after this phase passes]
+- Parallelization note: [which chunks can run in parallel after dependencies are met, and when `using-jj-workspaces` should be used]
+- Relevant existing files: `[path/to/file]` - [why this file matters]
+- Constraints / non-goals: [phase-local limits]
+- Execution order: [run one RED-GREEN-REFACTOR loop per new contract test; do not batch tests]
+- Agent handoff note: [what another agent needs to know if given only this phase]
 
-#### 1. [Component/File Group]
-**File**: `path/to/file.ext`
-**Changes**: [Summary]
+### Specifications
+#### Contract 1.1: [Contract title]
+[Implementation-independent contract]
+[If this contract introduces a new domain type, include its type definition here using branded/opaque types or another representation that makes illegal states unrepresentable]
 
-```[language]
-// Specific code to add/modify
-```
+#### Contract 1.2: [Contract title]
+[Implementation-independent contract]
 
-### Success Criteria:
+### Step Specifications
+#### Contract 1.X: [Step-level contract title]
+[Step-level contract if the phase contains a workflow; omit this section when not needed]
 
-#### Automated Verification:
-- [ ] Type checking passes: `npm run typecheck`
-- [ ] Linting passes: `npm run lint`
-- [ ] Tests pass: `npm test`
+### Contract Coverage Checklist
+#### Contract 1.1 checklist
+- [Observable output]
+- [Documented error]
+- [Documented mutation or side effect]
 
-#### Manual Verification:
-- [ ] Feature works as expected in UI
-- [ ] No regressions in related features
+#### Contract 1.2 checklist
+- [Observable output]
 
-**Implementation Note**: After completing this phase and all automated verification passes, pause for manual confirmation before proceeding to the next phase.
+### Specification-Driven TDD Workflow
+- First test to write: [failing contract test derived from Contract 1.1]
+- Remaining contract-test inventory: [ordered list for the rest of the phase]
+- Execution rule: [complete each test through RED, GREEN, and REFACTOR before adding the next]
+- Delete-and-rebuild note: [when existing untested code must be replaced instead of adapted]
+- Commands: `[targeted test command]`, `[typecheck/lint/test commands]`
+
+### Files
+- `[path/to/file]` - [change required]
+- `[path/to/file]` - [change required]
+
+### Phase Gate
+#### Automated Verification
+- [ ] Specification exists or has been updated before code changes
+- [ ] Contract coverage checklist covers all outputs, errors, mutations, and side effects in scope
+- [ ] Contract tests are executed one at a time and each fails for the expected reason before code is written
+- [ ] Each targeted contract test passes before the next new contract test is added
+- [ ] Phase-specific commands pass
+
+#### Manual Verification
+- [ ] [Manual check for this phase]
+- [ ] [Regression check for this phase]
 
 ---
 
 ## Phase 2: [Descriptive Name]
-[Similar structure...]
+[Repeat the same phase structure, adjusting `Specifications`, `Workflow Specification`, `Workflow Specifications`, and `Step Specifications` as needed for the phase]
 
----
+## Cross-Phase Test Strategy
 
-## Testing Strategy
+### Unit Contracts
+- [Cross-phase unit coverage]
 
-### Unit Tests:
-- [What to test]
+### Integration Contracts
+- [Cross-phase integration coverage]
 
-### Manual Testing Steps:
-1. [Specific step to verify]
+### E2E Contracts
+- [Cross-phase end-to-end coverage]
+
+## Migration Notes
+- [Migration, repair, rollout, or legacy-data considerations]
 
 ## References
 - Original ticket: [link or path]
+- Governing specifications: `[path/to/spec]`
 - Related research: [link or path]
 - Similar implementation: `[file:line]`
 ````
 
-### Step 5: Commit and Review
+### Step 6: Commit and Review
 
-1. Run via Bash: `jj new -m "plan: [summary of what the plan covers]"` to commit the newly created plan
-2. Present the draft plan location and ask for review
-3. Iterate based on feedback — adjust phases, scope, criteria
-4. After each round of changes, run via Bash: `jj new -m "plan: [summary of changes made]"` again
-5. Continue refining until satisfied
-6. Only create a bookmark/branch if explicitly asked to
+1. Run via Bash: `jj status` and confirm the working copy is clean before writing the plan
+2. If the working copy is not clean, describe the existing changes to the user, then run via Bash: `jj new` to start from a clean working copy
+3. Write the plan
+4. Run via Bash: `jj describe -m "plan: [summary of what the plan covers]"` to describe the change containing the new plan
+5. Present the draft plan location and ask for review
+6. Continue refining until satisfied
+7. Only create a bookmark/branch if explicitly asked to
 
 ## Guidelines
 
@@ -139,5 +270,17 @@ Use this template:
 - **Be interactive**: Get buy-in at each step, don't write the full plan in one shot
 - **Be thorough**: Include file paths, line numbers, measurable success criteria
 - **Be practical**: Incremental testable changes, consider edge cases
+- **Spec-first always**: No implementation phase without a linked specification and a planned failing contract test
+- **Plan full coverage, execute sequentially**: The plan must enumerate contract-test coverage for the full specification slice, but implementation must still run one RED-GREEN-REFACTOR loop per test
+- **Use the canonical outline**: Produce plans in the exact section order above unless the user explicitly asks for a different structure
+- **Match phase anatomy to the work**: Use `Specifications`, `Workflow Specification`, `Workflow Specifications`, and `Step Specifications` intentionally based on whether the phase defines invariants, a single workflow, multiple workflows, or workflow steps
+- **Expose chunk dependencies**: Make blocked-by, unblocks, and parallelizable relationships explicit so another agent can see what can run concurrently without rereading the whole plan
+- **Make phases self-contained**: A phase should be executable by another agent without reconstructing missing context from the rest of the plan
+- **Prefer parallel execution**: Default to splitting work into independent chunks whenever the contract and dependency graph allow it
+- **Plan parallel execution intentionally**: When chunks are independent, say so explicitly and note that `using-jj-workspaces` is the default isolation strategy
+- **Maintain contract numbering symmetry**: Every `Contract N.X` section should have a matching checklist subsection in the same phase
+- **Type new domains explicitly**: If a contract introduces a new type, include a type definition in the specification that makes illegal states unrepresentable and prefer branded/opaque types over primitive aliases
+- **Start clean**: Before creating a plan, ensure the working copy is clean; if not, describe the existing changes and use `jj new` before editing
 - **No open questions in final plan**: Research or ask for clarification immediately — every decision must be made before finalizing
+- **Separate contract from code**: Call out contract-preserving edits vs explicit specification deltas
 - **Separate success criteria**: Always distinguish automated (commands to run) from manual (human testing)
