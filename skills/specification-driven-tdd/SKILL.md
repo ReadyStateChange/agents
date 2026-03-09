@@ -100,6 +100,8 @@ If a test needs one of these details to pass, either:
 1. The test is wrong and should be rewritten, or
 2. The specification is incomplete and must be updated first
 
+When writing or reviewing tests, adding mocks, or considering test-only production APIs, load [references/testing-anti-patterns.md](references/testing-anti-patterns.md).
+
 ## Red-Green-Refactor
 
 ### SPEC - Write the Contract
@@ -146,6 +148,7 @@ Requirements:
 - Clear test name
 - Assertion traces directly to the specification
 - Real behavior over mocks whenever possible
+- Review the test against `references/testing-anti-patterns.md` before keeping it
 
 ### Verify RED - Watch It Fail
 
