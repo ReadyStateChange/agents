@@ -94,7 +94,7 @@ If the slug is already in use, append a short suffix and retry.
 Create the workspace with an explicit name and explicit base revset:
 
 ```bash
-jj workspace add "$WORKSPACE_DIR" --name "$WORKSPACE_NAME" "$BASE_REVSET"
+jj workspace add "$WORKSPACE_DIR" --name "$WORKSPACE_NAME" -r "$BASE_REVSET"
 cd "$WORKSPACE_DIR"
 jj workspace root
 ```

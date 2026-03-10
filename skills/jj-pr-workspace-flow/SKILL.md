@@ -186,7 +186,7 @@ You have to ensure the directory created for this workflow is deleted. If not, s
 
 - **Stale working copy**: Always run `jj workspace update-stale` if jj reports staleness.
 - **Conflicts**: jj does not block on conflicts. For simple two-sided conflicts, resolve them in the workspace. For three-sided or more complex conflicts, it is acceptable to leave them — jj will track them without blocking your work.
-- **Push rejected**: Run `jj git fetch` then `jj rebase -b <bookmark_name> -d <bookmark_name>@origin` and retry the push.
+- **Push rejected**: Run `jj git fetch` then `jj rebase -b <bookmark_name> -o <bookmark_name>@origin` and retry the push.
 - **Review thread resolve failed**: Confirm the thread ID came from `reviewThreads`, re-fetch threads, and retry `resolveReviewThread` only for unresolved, non-outdated threads.
 - **`gh auth status` false negative**: If it fails, run `gh api graphql -f query='{ viewer { login } }'`. If that succeeds, proceed.
 - **Cleanup after failure**: If anything fails mid-flow, return to `$ORIG_DIR`, run `jj workspace forget "$WORKSPACE_NAME"`, and only delete the directory using the guarded `fix-*` check from step 5.

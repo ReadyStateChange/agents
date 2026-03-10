@@ -38,7 +38,7 @@ Each independently executable phase or chunk gets its own bookmark that builds o
 
 ```bash
 jj bookmark create <plan-name>/phase-1
-jj bookmark track <plan-name>/phase-1@origin
+jj bookmark track <plan-name>/phase-1 --remote origin
 ```
 
 After completing and verifying each phase, write a commit message that summarizes what you **actually** changed — not what the plan said to change. Describe the real files modified, functions added, bugs fixed, etc.
@@ -66,7 +66,7 @@ Then create the next phase's bookmark on top:
 
 ```bash
 jj bookmark create <plan-name>/phase-[N+1]
-jj bookmark track <plan-name>/phase-[N+1]@origin
+jj bookmark track <plan-name>/phase-[N+1] --remote origin
 ```
 
 ## Implementation Philosophy
