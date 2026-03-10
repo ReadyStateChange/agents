@@ -11,6 +11,7 @@ A collection of reusable skills for AI coding agents.
 | **creating-handoffs** | Creates concise handoff documents with status, decisions, artifacts, and next actions |
 | **creating-plans** | Creates detailed implementation plans through interactive research and iteration |
 | **describing-pull-requests** | Generates or updates pull request descriptions from diffs, commits, and repository templates |
+| **conversational-shaping** | Facilitates human-led shaping through one-question-at-a-time dialogue and requires teach-back before completion |
 | **humanizing-writing** | Removes AI-writing patterns and rewrites text to sound natural, specific, and human |
 | **implementing-plans** | Implements approved technical plans phase by phase with verification |
 | **iterating-plans** | Iterates on existing implementation plans with research and surgical updates |
