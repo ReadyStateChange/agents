@@ -1,0 +1,4 @@
+interface:
+  display_name: "Subagent-Driven Dev"
+  short_description: "Execute plans with implementer and reviewer agents"
+  default_prompt: "Use $subagent-driven-development to execute this approved plan task-by-task with implementer, spec-review, and code-quality review loops."
