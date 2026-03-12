@@ -57,6 +57,8 @@ After the specification is clear:
 
 Present the proposed phase structure and get feedback before writing details. Every phase must map to a specific specification slice and its contract tests. The plan must cover the whole contract for that phase, including outputs, documented errors, mutations, and side effects, while making clear that implementation proceeds one RED-GREEN-REFACTOR test at a time.
 
+Testing strategy cannot be deferred to the end of the plan. Every phase must include its own test strategy and a test checklist with explicit test items that can be checked off as each test turns GREEN.
+
 Each phase must also be self-contained. An agent handed only that phase should have everything needed to execute it independently: governing spec, relevant files, dependencies, constraints, contract-test inventory, execution order, and verification steps.
 
 The plan must also make chunk dependencies explicit. Treat each phase as an execution chunk unless you explicitly split it further. For every chunk, state what it depends on, what it unblocks, and which sibling chunks can run in parallel once prerequisites are satisfied. Parallel execution is the preferred default whenever dependencies allow it, so actively shape the plan to maximize independent chunks. When parallel execution is viable, call out that `using-jj-workspaces` should be used.
@@ -89,10 +91,12 @@ Use the following outline by default unless the user explicitly requests a diffe
 ### Contract Coverage Checklist
 #### Contract N.1 checklist
 ### Specification-Driven TDD Workflow
+### Phase Test Strategy
+### Phase Test Checklist (Mark Green During Implementation)
 ### Files
 ### Phase Gate
 
-## Cross-Phase Test Strategy
+## Cross-Phase Test Notes (Optional, Does Not Replace Phase Test Strategy)
 ### Unit Contracts
 ### Integration Contracts
 ### E2E Contracts
@@ -187,6 +191,7 @@ Use this section to make parallel work the default execution model whenever depe
 - Relevant existing files: `[path/to/file]` - [why this file matters]
 - Constraints / non-goals: [phase-local limits]
 - Execution order: [run one RED-GREEN-REFACTOR loop per new contract test; do not batch tests]
+- Testing strategy source of truth: [this phase's `Phase Test Strategy` and `Phase Test Checklist`; do not defer testing detail to a later section]
 - Agent handoff note: [what another agent needs to know if given only this phase]
 
 ### Specifications
@@ -203,12 +208,12 @@ Use this section to make parallel work the default execution model whenever depe
 
 ### Contract Coverage Checklist
 #### Contract 1.1 checklist
-- [Observable output]
-- [Documented error]
-- [Documented mutation or side effect]
+- [ ] [Observable output]
+- [ ] [Documented error]
+- [ ] [Documented mutation or side effect]
 
 #### Contract 1.2 checklist
-- [Observable output]
+- [ ] [Observable output]
 
 ### Specification-Driven TDD Workflow
 - First test to write: [failing contract test derived from Contract 1.1]
@@ -216,6 +221,17 @@ Use this section to make parallel work the default execution model whenever depe
 - Execution rule: [complete each test through RED, GREEN, and REFACTOR before adding the next]
 - Delete-and-rebuild note: [when existing untested code must be replaced instead of adapted]
 - Commands: `[targeted test command]`, `[typecheck/lint/test commands]`
+
+### Phase Test Strategy
+- Contract-to-test mapping: [map each contract and checklist item to at least one concrete test]
+- Test levels in this phase: [unit/integration/e2e as applicable]
+- Execution order: [risk-first sequence and why]
+- Evidence capture: [where passing output/log references are recorded]
+
+### Phase Test Checklist (Mark Green During Implementation)
+- [ ] `T1` [contract test name] — covers [Contract 1.X], command: `[command]`
+- [ ] `T2` [contract test name] — covers [Contract 1.Y], command: `[command]`
+- [ ] `T3` [integration/e2e test name if applicable], command: `[command]`
 
 ### Files
 - `[path/to/file]` - [change required]
@@ -227,6 +243,7 @@ Use this section to make parallel work the default execution model whenever depe
 - [ ] Contract coverage checklist covers all outputs, errors, mutations, and side effects in scope
 - [ ] Contract tests are executed one at a time and each fails for the expected reason before code is written
 - [ ] Each targeted contract test passes before the next new contract test is added
+- [ ] All `Phase Test Checklist` items for this phase are checked `[x]` after turning GREEN
 - [ ] Phase-specific commands pass
 
 #### Manual Verification
@@ -238,7 +255,7 @@ Use this section to make parallel work the default execution model whenever depe
 ## Phase 2: [Descriptive Name]
 [Repeat the same phase structure, adjusting `Specifications`, `Workflow Specification`, `Workflow Specifications`, and `Step Specifications` as needed for the phase]
 
-## Cross-Phase Test Strategy
+## Cross-Phase Test Notes (Optional, Does Not Replace Phase Test Strategy)
 
 ### Unit Contracts
 - [Cross-phase unit coverage]
@@ -288,6 +305,8 @@ Use this section to make parallel work the default execution model whenever depe
 - **Be practical**: Incremental testable changes, consider edge cases
 - **Spec-first always**: No implementation phase without a linked specification and a planned failing contract test
 - **Plan full coverage, execute sequentially**: The plan must enumerate contract-test coverage for the full specification slice, but implementation must still run one RED-GREEN-REFACTOR loop per test
+- **Require per-phase testing plans**: Every phase must contain `Phase Test Strategy` and `Phase Test Checklist`; do not defer testing strategy to the end
+- **Track GREEN status explicitly**: Phase test checklist items must start unchecked and be designed to be checked off as tests pass
 - **Use the canonical outline**: Produce plans in the exact section order above unless the user explicitly asks for a different structure
 - **Match phase anatomy to the work**: Use `Specifications`, `Workflow Specification`, `Workflow Specifications`, and `Step Specifications` intentionally based on whether the phase defines invariants, a single workflow, multiple workflows, or workflow steps
 - **Expose chunk dependencies**: Make blocked-by, unblocks, and parallelizable relationships explicit so another agent can see what can run concurrently without rereading the whole plan
