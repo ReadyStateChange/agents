@@ -79,8 +79,10 @@ Does this align with your intent?
    - `Parallel Execution Strategy`
    - `Cross-Phase Test Strategy`
    - `Migration Notes`
+   - `Security Review`
    - `References`
-6. If adding or changing a phase, keep it self-contained and preserve the phase anatomy:
+6. If changes touch authentication, authorization, data handling, external APIs, or secrets, re-run the relevant `security-checklist` sections and update the `## Security Review` section
+7. If adding or changing a phase, keep it self-contained and preserve the phase anatomy:
    - `Goal`
    - `Phase Execution Rules`
    - `Specifications`, `Workflow Specification`, or `Workflow Specifications` as appropriate
@@ -89,18 +91,18 @@ Does this align with your intent?
    - `Specification-Driven TDD Workflow`
    - `Files`
    - `Phase Gate`
-7. If modifying scope, update `What We Are Not Doing`
-8. Keep contract numbering and checklist numbering aligned within each phase
-9. If a contract introduces a new type, ensure the specification includes a type definition that makes illegal states unrepresentable and prefers branded/opaque domain types over primitive aliases
-10. Maintain the automated vs manual success criteria distinction inside each `Phase Gate`
-11. If the updated plan would implement behavior without a specification, stop and create/refine the spec before finalizing the plan
-12. If the updated plan adds contract tests, ensure it preserves both:
+8. If modifying scope, update `What We Are Not Doing`
+9. Keep contract numbering and checklist numbering aligned within each phase
+10. If a contract introduces a new type, ensure the specification includes a type definition that makes illegal states unrepresentable and prefers branded/opaque domain types over primitive aliases
+11. Maintain the automated vs manual success criteria distinction inside each `Phase Gate`
+12. If the updated plan would implement behavior without a specification, stop and create/refine the spec before finalizing the plan
+13. If the updated plan adds contract tests, ensure it preserves both:
    - Full coverage of all specified outputs, errors, mutations, and side effects
    - One-test-at-a-time execution during implementation rather than batching RED tests
-13. If a phase depends on prior work, make the prerequisite explicit inside that phase instead of assuming the reader will infer it from earlier sections
-14. If sequencing changes, update the top-level chunk dependency map and every affected `Phase Execution Rules` section so blocked-by, unblocks, and parallelizable relationships stay accurate
-15. If the revised plan can safely create or preserve more independent chunks, prefer that structure over serial sequencing
-16. If the revised plan creates independent chunks, say so explicitly and note when `using-jj-workspaces` should be used to execute them in parallel
+14. If a phase depends on prior work, make the prerequisite explicit inside that phase instead of assuming the reader will infer it from earlier sections
+15. If sequencing changes, update the top-level chunk dependency map and every affected `Phase Execution Rules` section so blocked-by, unblocks, and parallelizable relationships stay accurate
+16. If the revised plan can safely create or preserve more independent chunks, prefer that structure over serial sequencing
+17. If the revised plan creates independent chunks, say so explicitly and note when `using-jj-workspaces` should be used to execute them in parallel
 
 ### Step 5: Commit and Present Changes
 

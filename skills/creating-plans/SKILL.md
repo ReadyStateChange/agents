@@ -98,8 +98,13 @@ Use the following outline by default unless the user explicitly requests a diffe
 ### E2E Contracts
 
 ## Migration Notes
+## Security Review
 ## References
 ```
+
+### Step 4b: Security Review
+
+After the plan structure is confirmed, invoke `security-checklist` (plan review mode) against the proposed plan. Add the `## Security Review` section to the plan output, before `## References`.
 
 ### Step 5: Write the Plan
 
@@ -246,6 +251,17 @@ Use this section to make parallel work the default execution model whenever depe
 
 ## Migration Notes
 - [Migration, repair, rollout, or legacy-data considerations]
+
+## Security Review
+
+**Status:** [Clean | Concerns Noted | Blockers Found]
+**Reviewed:** [Date]
+
+### Findings
+[Output from `security-checklist` plan review mode]
+
+### Checklist Coverage
+[Which categories were applicable vs not relevant]
 
 ## References
 - Original ticket: [link or path]
