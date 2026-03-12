@@ -1,0 +1,4 @@
+interface:
+  display_name: "QA Delegate"
+  short_description: "Verify feature correctness and produce acceptance recommendations"
+  default_prompt: "Use $verifying-feature-quality to create a coverage matrix, run QA verification, and issue an acceptance recommendation."

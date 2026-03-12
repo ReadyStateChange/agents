@@ -1,0 +1,4 @@
+interface:
+  display_name: "Slicing Delegate"
+  short_description: "Create vertical, demoable implementation slices"
+  default_prompt: "Use $slicing-work to cut this shaped solution into sequenced, demoable slices with clear acceptance hooks."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Architecture Designer"
+  short_description: "Design clean architecture boundaries and placement"
+  default_prompt: "Use $designing-clean-architecture to place logic across domain/application/adapters/infrastructure for this system and flag layering violations."

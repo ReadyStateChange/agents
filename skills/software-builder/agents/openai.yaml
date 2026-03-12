@@ -1,0 +1,4 @@
+interface:
+  display_name: "Software Builder"
+  short_description: "Run stage-gated software delivery from idea to accepted slices"
+  default_prompt: "Use $software-builder to run conversational framing with a teach-back hard gate, then conversational shaping, then slice-by-slice implementation via subagents and QA verification."

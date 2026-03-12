@@ -1,0 +1,4 @@
+interface:
+  display_name: "Shape-To-Spec Delegate"
+  short_description: "Translate shaped intent into explicit behavioral contracts"
+  default_prompt: "Use $translating-shape-to-spec to convert selected shape and breadboard artifacts into a traceable draft functional spec."

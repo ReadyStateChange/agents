@@ -1,0 +1,4 @@
+interface:
+  display_name: "Functional Spec Delegate"
+  short_description: "Finalize feature behavior contracts and acceptance criteria"
+  default_prompt: "Use $writing-functional-specs to produce an implementation-ready functional spec with explicit acceptance criteria."

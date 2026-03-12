@@ -1,0 +1,4 @@
+interface:
+  display_name: "Framing Delegate"
+  short_description: "Turn rough asks into clear problem and outcome framing"
+  default_prompt: "Use $framing-problems to produce a clear frame document for this request before shaping solutions."
