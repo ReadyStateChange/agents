@@ -19,6 +19,7 @@ When given a plan path:
    - The behavior being introduced or changed
    - The contract tests that must be written first
    - A `Phase Test Strategy` and `Phase Test Checklist` for that phase
+   - A phase-start clean-working-copy rule (`jj status` before code changes)
    - Its chunk dependencies, what it unblocks, and whether it can run in parallel with other work
 5. If any of those are missing, stop and repair the plan/specification before writing production code
 6. Start with the earliest unchecked phase whose dependencies are satisfied, but if multiple chunks are unblocked, prefer executing them in parallel rather than serially
@@ -91,23 +92,24 @@ For each phase:
 
 1. Confirm the phase's dependencies are satisfied and that the plan still marks it as unblocked. If not, stop and resolve the dependency mismatch first.
 2. If the plan marks sibling chunks as parallelizable and more than one is ready, default to moving this phase into its own JJ workspace via `using-jj-workspaces` before writing code.
-3. Confirm the phase's governing specification. If it is missing or wrong, stop and fix the plan/spec first.
-4. Confirm the phase includes a `Phase Test Strategy` and `Phase Test Checklist`. If missing, stop and repair the plan before implementing.
-5. If the phase changes behavior, write or refine the specification with `writing-specifications` before touching production code.
-6. If that specification introduces a new type, add the type definition to the specification using branded/opaque domain types or another form that makes illegal states unrepresentable.
-7. Pick the next unchecked test item from the phase's `Phase Test Checklist`.
-8. Write exactly one minimal failing contract test derived directly from that specification and checklist item.
-9. Run the targeted test and verify RED:
+3. Run `jj status` and confirm the phase starts from a clean working copy before code changes; if dirty, stop and run `jj new`, then re-check phase dependencies.
+4. Confirm the phase's governing specification. If it is missing or wrong, stop and fix the plan/spec first.
+5. Confirm the phase includes a `Phase Test Strategy` and `Phase Test Checklist`. If missing, stop and repair the plan before implementing.
+6. If the phase changes behavior, write or refine the specification with `writing-specifications` before touching production code.
+7. If that specification introduces a new type, add the type definition to the specification using branded/opaque domain types or another form that makes illegal states unrepresentable.
+8. Pick the next unchecked test item from the phase's `Phase Test Checklist`.
+9. Write exactly one minimal failing contract test derived directly from that specification and checklist item.
+10. Run the targeted test and verify RED:
    - It fails, not errors
    - It fails for the expected contract reason
    - No additional new contract tests are written until this test is GREEN
-10. If the affected behavior already exists without a prior failing contract test, follow `specification-driven-tdd`: delete the affected implementation and rebuild it from the specification instead of adapting incidental behavior.
-11. Write the minimal production code needed to satisfy the contract.
-12. Run the targeted contract test again, then the broader automated checks for the phase.
-13. Refactor only after GREEN, while preserving the contract.
-14. As soon as the test is GREEN, check off the matching item in `Phase Test Checklist`.
-15. Repeat the cycle one test item at a time until the phase's `Phase Test Checklist` is fully checked.
-16. Update remaining phase-level checkboxes only after the phase is actually verified.
+11. If the affected behavior already exists without a prior failing contract test, follow `specification-driven-tdd`: delete the affected implementation and rebuild it from the specification instead of adapting incidental behavior.
+12. Write the minimal production code needed to satisfy the contract.
+13. Run the targeted contract test again, then the broader automated checks for the phase.
+14. Refactor only after GREEN, while preserving the contract.
+15. As soon as the test is GREEN, check off the matching item in `Phase Test Checklist`.
+16. Repeat the cycle one test item at a time until the phase's `Phase Test Checklist` is fully checked.
+17. Update remaining phase-level checkboxes only after the phase is actually verified.
 
 ## When Things Don't Match
 
@@ -128,13 +130,14 @@ How should I proceed?
 0. **If the phase has no linked specification or no contract tests to write first**, **STOP** and fix the plan before implementing that phase.
 1. **If the phase has no `Phase Test Strategy` or no `Phase Test Checklist`**, **STOP** and fix the plan before implementing that phase.
 2. **If the phase has no automated verification steps** (typecheck, lint, tests, etc.), **STOP** and ask the human for explicit permission before implementing that phase. Do not proceed without approval.
-3. Verify that each contract test was written before production code and failed for the expected reason. If a test passed immediately, repair the test or remove the prewritten implementation and restart that test item.
-4. Verify that only one new contract test was introduced for each active RED-GREEN-REFACTOR loop. If multiple new tests were added up front, collapse back to a single test and resume one test item at a time.
-5. Verify that every `Phase Test Checklist` item is checked `[x]` only after its corresponding test is GREEN.
-6. Run the automated success criteria checks (targeted contract tests first, then broader checks such as typecheck, lint, and full test suites).
-7. Fix any issues before proceeding.
-8. Check off completed items in the plan file using edit_file.
-9. **If the plan includes manual verification steps for this phase**, pause for human verification:
+3. Verify the phase started from a clean working copy (`jj status` was clean before the first code edit). If not, stop and repair workspace hygiene before proceeding.
+4. Verify that each contract test was written before production code and failed for the expected reason. If a test passed immediately, repair the test or remove the prewritten implementation and restart that test item.
+5. Verify that only one new contract test was introduced for each active RED-GREEN-REFACTOR loop. If multiple new tests were added up front, collapse back to a single test and resume one test item at a time.
+6. Verify that every `Phase Test Checklist` item is checked `[x]` only after its corresponding test is GREEN.
+7. Run the automated success criteria checks (targeted contract tests first, then broader checks such as typecheck, lint, and full test suites).
+8. Fix any issues before proceeding.
+9. Check off completed items in the plan file using edit_file.
+10. **If the plan includes manual verification steps for this phase**, pause for human verification:
 
 ```
 Phase [N] Complete - Ready for Manual Verification
@@ -152,7 +155,7 @@ If instructed to execute multiple phases consecutively, skip the pause until the
 
 Do NOT check off manual testing items until confirmed by the user.
 
-10. **If the plan has no manual verification for this phase**, proceed directly to the next phase after automated checks pass.
+11. **If the plan has no manual verification for this phase**, proceed directly to the next phase after automated checks pass.
 
 After completing each phase, commit, set the bookmark, and push as described in the **Bookmark Strategy** section above.
 
@@ -175,6 +178,7 @@ If the plan has existing checkmarks:
 - **Honor chunk dependencies**: Only pick work that the plan marks as unblocked, and reassess when a completed chunk unlocks parallel follow-up work
 - **Prefer parallel execution**: When more than one chunk is unblocked, treat serial execution as the exception and parallel JJ workspaces as the default
 - **Use JJ workspaces for parallel chunks**: When the plan identifies independent work, default to `using-jj-workspaces` instead of mixing chunks in one working copy
+- **Start each phase from a clean working copy**: Run `jj status` before phase edits and stop to restore cleanliness (`jj new` or equivalent) when dirty
 - **Type new domains in the contract**: When a specification introduces a new type, define it so illegal states are unrepresentable and use branded/opaque domain types by default
 - **No silent widening**: Any behavior change requires an explicit specification change
 - **No grandfathering untested code**: Existing code without prior failing contract tests is not exempt from the spec-first workflow

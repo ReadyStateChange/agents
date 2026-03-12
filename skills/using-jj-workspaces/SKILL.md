@@ -208,7 +208,7 @@ If the directory does not match one of those patterns, stop and ask the user bef
 
 Use this skill from:
 
-- `creating-plans` when the plan identifies independent chunks that can run in parallel
+- `creating-implementations-plans` when the plan identifies independent chunks that can run in parallel
 - `iterating-plans` when plan revisions change which chunks are blocked or parallelizable
 - `implementing-plans` when execution should not disturb the current workspace
 - Any task where the user wants parallel or isolated JJ-based work

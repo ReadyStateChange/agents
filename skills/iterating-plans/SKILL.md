@@ -13,6 +13,7 @@ Update existing implementation plans based on user feedback with surgical precis
 2. **If only plan path provided**: read it and ask what changes to make
 3. **If nothing provided**: ask for the plan path
 4. Read any linked specification documents before deciding how to update the plan
+5. Before finalizing revised plan content, invoke `brainstorming` for a human-in-the-loop walkthrough
 
 ## Workflow
 
@@ -38,9 +39,16 @@ If research is needed:
 1. Use `finder`, `Grep`, and `Read` to investigate the codebase
 2. Check existing research or decision documents for historical context
 
-### Step 3: Confirm Understanding
+### Step 3: Confirm Understanding Through Brainstorming Walkthrough
 
 Before making changes:
+
+1. Invoke `brainstorming`
+2. Walk through the proposed revisions with the human one section at a time
+3. Capture refinement feedback and decisions explicitly
+4. Confirm approval to apply edits
+
+Use this summary prompt during the walkthrough:
 
 ```
 Based on your feedback, I understand you want to:
@@ -103,6 +111,7 @@ Does this align with your intent?
 15. If sequencing changes, update the top-level chunk dependency map and every affected `Phase Execution Rules` section so blocked-by, unblocks, and parallelizable relationships stay accurate
 16. If the revised plan can safely create or preserve more independent chunks, prefer that structure over serial sequencing
 17. If the revised plan creates independent chunks, say so explicitly and note when `using-jj-workspaces` should be used to execute them in parallel
+18. Do not finalize revised plan content until the brainstorming walkthrough confirms human approval
 
 ### Step 5: Commit and Present Changes
 
@@ -127,6 +136,7 @@ Would you like any further adjustments?
 - **Be skeptical**: Don't blindly accept changes that conflict with existing phases — point out issues
 - **Be surgical**: Precise edits, preserve good content, only research what's necessary
 - **Be interactive**: Confirm understanding before editing, allow course corrections
+- **Use brainstorming for human-in-the-loop iteration**: Walk through proposed revisions with `brainstorming` and collect explicit approval before finalizing edits
 - **No silent contract drift**: Every behavior change must correspond to a specification change or an explicit statement that the contract is unchanged
 - **Preserve the canonical outline**: Do not casually rename, reorder, or collapse the major sections or phase anatomy
 - **No open questions**: If a change raises questions, ask immediately — don't update with unresolved items
