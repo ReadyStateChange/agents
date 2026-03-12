@@ -8,6 +8,8 @@ argument-hint: "Provide the use case, architecture draft, or file paths/diff to 
 
 Place logic by business meaning, not by the framework entry point.
 
+Default mode for technical-spec creation is human-in-the-loop: use `brainstorming` for back-and-forth before finalizing architecture decisions.
+
 Use this skill to design new systems, review pull requests, and plan refactors so policy and workflow logic move inward while framework details stay at the edge.
 
 ## Use This Skill When
@@ -32,6 +34,17 @@ Frameworks / Infrastructure -> Interface / Adapters -> Application / Use Cases -
 3. Business rules and invariants
 4. External side effects (DB, payment, email, queue, files)
 5. Current entry points (API, UI, job, CLI)
+
+## Conversation Mode For Technical Spec (Default)
+
+Before finalizing technical design artifacts:
+
+1. Use `brainstorming` to discuss component boundaries, trade-offs, and risky assumptions with the human
+2. Present proposed layer mapping and boundary contracts in sections
+3. Capture explicit human approval for major design decisions
+4. Finalize the technical spec only after this review loop
+
+If approved decisions change promised behavior, send changes back to functional spec stages before implementation.
 
 ## Design Workflow
 

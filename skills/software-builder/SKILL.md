@@ -30,8 +30,8 @@ Run stages in this order unless a later stage exposes a defect in earlier truth.
 3. Breadboard selected shape with `breadboarding`
 4. Translate shape into draft spec with `translating-shape-to-spec`
 5. Define vertical, demoable increments with `slicing-work`
-6. Finalize functional behavior contract with `writing-functional-specs`
-7. Design component boundaries and layer placement with `designing-clean-architecture`
+6. Finalize functional behavior contract with `writing-functional-specs` after a `brainstorming` conversation with the human
+7. Design component boundaries and layer placement with `designing-clean-architecture` after a `brainstorming` conversation with the human
 8. Implement one slice at a time with `subagent-driven-development` (which enforces `specification-driven-tdd`)
 9. Verify each slice and final feature with `verifying-feature-quality`
 10. Keep artifacts aligned with `maintaining-artifact-consistency`
@@ -47,6 +47,17 @@ Stage 1 is a human-in-the-loop conversation, not a one-shot document pass.
 5. Only proceed to Stage 2 when the teach-back is explicit and aligned
 
 This gate is hard: no shaping before explicit human teach-back.
+
+## Spec And Technical Design Conversation Gates
+
+Before finalizing Stage 6 and Stage 7 artifacts, run conversational back-and-forth using `brainstorming`.
+
+1. Use `brainstorming` to explore ambiguities, trade-offs, and edge cases with the human
+2. Present the proposed functional spec or technical spec sections
+3. Get explicit human approval of the proposed sections
+4. Only then finalize the corresponding artifact
+
+Default behavior: Stage 6 and Stage 7 use `brainstorming` unless the user explicitly opts out.
 
 ## Slice-First Delivery Loop
 
@@ -71,6 +82,8 @@ Before each handoff, verify:
 - No major cross-artifact conflict is unresolved
 - Open questions are visible, not buried
 - For Stage 1 -> Stage 2, human teach-back of both problem and desired outcome is captured and aligned
+- For Stage 5 -> Stage 6, brainstorming-based human review of functional spec sections is complete
+- For Stage 6 -> Stage 7 and Stage 7 -> Stage 8, brainstorming-based human review of technical design sections is complete
 
 Stop forward progress when artifacts disagree.
 
@@ -78,6 +91,7 @@ Stop forward progress when artifacts disagree.
 
 - Do not call work high quality without both proofs
 - Do not proceed from framing to shaping without human teach-back of problem and desired outcome
+- Do not finalize functional spec or technical design without brainstorming-based human back-and-forth and approval
 - Do not let requirements disappear between shaping and spec
 - Do not allow implementation to invent behavior outside the functional spec
 - Do not accept slices without QA evidence tied to acceptance criteria
@@ -89,6 +103,7 @@ Use these existing skills as the default delegates:
 
 - `conversational-shaping` (default)
 - `shaping` (fallback when a non-conversational shaping mode is explicitly requested)
+- `brainstorming` (default for Stage 6 and Stage 7 collaborative review)
 - `breadboarding`
 - `designing-clean-architecture`
 - `subagent-driven-development`

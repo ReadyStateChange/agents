@@ -8,6 +8,8 @@ argument-hint: "Provide draft functional spec, slices, shaping requirements, and
 
 Refine draft behavior into a complete, contract-facing functional specification.
 
+Default mode is human-in-the-loop: use `brainstorming` for back-and-forth before finalizing the spec.
+
 ## Use This Skill When
 
 - Draft spec exists but is incomplete or ambiguous
@@ -26,6 +28,18 @@ Refine draft behavior into a complete, contract-facing functional specification.
 - Final functional spec
 - Explicit acceptance criteria
 - Open questions list (must be resolved before implementation)
+- Human-reviewed decisions captured from brainstorming conversation
+
+## Conversation Mode (Default)
+
+Before finalizing the functional spec:
+
+1. Use `brainstorming` to walk ambiguous areas and trade-offs with the human
+2. Present proposed spec sections incrementally
+3. Capture explicit human approval or requested changes
+4. Finalize only approved sections
+
+If human feedback changes scope or intent, send updates back to the highest artifact that must change.
 
 ## Required Spec Sections
 
@@ -58,3 +72,4 @@ Refine draft behavior into a complete, contract-facing functional specification.
 - Important failures and recoveries are explicit
 - Permissions and integrations are explicit
 - Acceptance criteria are testable and unambiguous
+- Brainstorming-based human review and approval are captured for finalized sections
