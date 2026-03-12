@@ -3,7 +3,7 @@ name: conversational-shaping
 description: "Facilitates a human-driven shaping conversation using Shape Up chapters 2-5 and shaping notation. Use when the human should drive the shaping and the agent should ask focused questions, one at a time, until teach-back is successful."
 ---
 
-# Facilitating Human-Led Shaping Conversations
+# Conversational Shaping
 
 Guides a shaping conversation where the human leads decisions and the agent advances the work by asking focused questions.
 

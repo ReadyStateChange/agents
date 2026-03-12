@@ -2,7 +2,7 @@
 
 A collection of reusable skills for AI coding agents.
 
-## Skills
+## Canonical Skills
 
 | Skill | Description |
 |-------|-------------|
@@ -11,7 +11,7 @@ A collection of reusable skills for AI coding agents.
 | **breadboarding** | Transforms workflows into UI and Code affordance tables with wiring to map or design systems |
 | **creating-handoffs** | Creates concise handoff documents with status, decisions, artifacts, and next actions |
 | **conversational-shaping** | Facilitates human-led shaping through one-question-at-a-time dialogue and requires teach-back before completion |
-| **creating-plans** | Creates detailed implementation plans through interactive research and iteration |
+| **creating-implementations-plans** | Creates detailed implementation plans through interactive research and iteration |
 | **designing-clean-architecture** | Designs and reviews systems using clean architecture placement rules |
 | **describing-pull-requests** | Generates or updates pull request descriptions from diffs, commits, and repository templates |
 | **finishing-a-development-branch** | Guides completion of development work with structured options for merge, PR, or cleanup |
@@ -40,9 +40,18 @@ A collection of reusable skills for AI coding agents.
 | **writing-functional-specs** | Finalizes feature-level functional specs with explicit behavior and acceptance criteria |
 | **writing-specifications** | Writes formal function/method specifications with preconditions and postconditions |
 
+## Legacy Aliases (Redirects)
+
+These names are kept for backward compatibility with older prompts. They should redirect to the listed canonical skill.
+
+| Alias | Redirects To | Notes |
+|-------|--------------|-------|
+| **creating-plans** | **creating-implementations-plans** | Legacy name; use canonical skill for new prompts |
+| **creating-implementation-plans** | **creating-implementations-plans** | Legacy singular variant; use canonical skill for new prompts |
+
 ## Syncing Skill Links
 
-Use the sync script to mirror canonical skills from `~/.config/agents/skills` into both `~/.claude/skills` and `~/.codex/skills`.
+Use the sync script to mirror skills from `~/.config/agents/skills` into both `~/.claude/skills` and `~/.codex/skills`.
 
 ```bash
 ./scripts/sync-skill-links.sh
