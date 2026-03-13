@@ -20,6 +20,10 @@ Review the implementation after spec-compliance review has passed. Focus on whet
 
 [PATHS, DIFF CONTEXT, OR BOTH]
 
+### Return Metadata Context
+
+[RUN IDS, STAGE ID, DEPTH, CORRELATION ID, BUDGET ENVELOPE]
+
 ## Core Rules
 
 Assume spec compliance has already been reviewed.
@@ -27,6 +31,8 @@ Assume spec compliance has already been reviewed.
 Do not spend your time redoing the spec review unless a quality issue exposes a likely specification, contract-test, or plan problem.
 
 Review the actual code and tests. Do not trust summaries.
+
+Always include budget + trace metadata in your response so the controller can persist a stage artifact entry.
 
 ## Review Focus
 
@@ -79,6 +85,12 @@ If a problem is really a plan or task-structure issue rather than a direct code 
 - `Approved`
 - `Approved with concerns`
 - `Changes required`
+
+### Metadata (Required)
+
+- `Budget snapshot:` [input/output/total tokens, requests, tool_calls, plus `unknown` with reason when unavailable]
+- `Trace metadata:` [run_id, parent_run_id, stage_id, depth, correlation_id, started_at, ended_at, duration_ms]
+- `Artifacts and evidence:` [reviewed paths and key verification references]
 
 ## Review Notes
 

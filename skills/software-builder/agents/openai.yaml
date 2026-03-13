@@ -1,4 +1,4 @@
 interface:
   display_name: "Software Builder"
   short_description: "Run stage-gated software delivery from idea to accepted slices"
-  default_prompt: "Use $software-builder to run conversational framing with a teach-back hard gate, conversational shaping, brainstorming-driven functional and technical spec reviews, then slice-by-slice implementation via subagents and QA verification."
+  default_prompt: "Use $software-builder to run conversational framing with a teach-back hard gate, conversational shaping, brainstorming-driven functional and technical spec reviews, then bounded slice-by-slice subagent implementation and QA verification while persisting budget + trace metadata from every delegate return as markdown artifacts."

@@ -27,6 +27,14 @@ Bridge shaping intent to contract-ready behavior without losing critical commitm
 - Requirement-to-spec traceability notes
 - Translation decisions with rationale
 - Open questions that block finalization
+- Subagent return metadata (`Budget snapshot` and `Trace metadata`) when invoked by an orchestrator that requires telemetry artifacts
+
+## Delegated Return Metadata
+
+When this skill is delegated by `software-builder`, include:
+
+- `Budget snapshot` (`input_tokens`, `output_tokens`, `total_tokens`, `requests`, `tool_calls`, or `unknown` with reason)
+- `Trace metadata` (`run_id`, `parent_run_id`, `stage_id`, `delegate_name`, `depth`, `correlation_id`, `started_at`, `ended_at`, `duration_ms`)
 
 ## Translation Workflow
 

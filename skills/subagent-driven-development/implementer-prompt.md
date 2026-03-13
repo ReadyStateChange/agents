@@ -24,6 +24,10 @@ Implement the assigned plan task using the provided context and governing specif
 
 [DIRECTORY]
 
+### Return Metadata Context
+
+[RUN IDS, STAGE ID, DEPTH, CORRELATION ID, BUDGET ENVELOPE]
+
 ## Before You Begin
 
 If the task, specification, constraints, or expected behavior are unclear, ask now.
@@ -77,11 +81,30 @@ Before reporting back, check:
 
 Fix issues you discover before reporting back.
 
+## Execution Log
+
+After completing a task (status `DONE` or `DONE_WITH_CONCERNS`), **append** an entry to `stage-10-execution-log.md` in the plan directory. If the file does not exist, create it with a `# Stage 10 – Execution Log` heading first.
+
+Each entry must include:
+
+- **Slice/task identifier** — which slice or task was completed
+- **What was built** — concrete summary of the implementation
+- **Contract tests run** — which tests were executed
+- **Test outcomes** — pass/fail results
+- **Verification evidence** — command output or other proof
+
+This log is a living document that supports stop-and-resume. When work is picked up later, the log shows exactly what was already done.
+
+Do not skip this step. The controller will verify the entry exists before marking the task complete.
+
 ## Report Format
 
 - `Status:` `DONE` | `DONE_WITH_CONCERNS` | `NEEDS_CONTEXT` | `BLOCKED`
 - `Implemented:` [summary]
 - `Verification:` [commands run and results]
 - `Files changed:` [paths]
+- `Budget snapshot:` [input/output/total tokens, requests, tool_calls, plus `unknown` with reason when unavailable]
+- `Trace metadata:` [run_id, parent_run_id, stage_id, depth, correlation_id, started_at, ended_at, duration_ms]
 - `Spec/TDD notes:` [how the work traced to the governing specification]
+- `Artifact updates:` [paths updated, including `stage-10-execution-log.md` entry]
 - `Concerns or blockers:` [details]

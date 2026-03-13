@@ -38,6 +38,27 @@ Run stages in this order unless a later stage exposes a defect in earlier truth.
 11. Verify each slice and final feature with `verifying-feature-quality`
 12. Keep artifacts aligned with `maintaining-artifact-consistency`
 
+## Delegation Topology (Option 2 Default)
+
+Use bounded nested orchestration.
+
+- Level 0 orchestrator: `software-builder`
+- Level 1 delegates: one stage delegate at a time (`framing-problems` through `maintaining-artifact-consistency`)
+- Level 2 delegates: allowed only inside Stage 10 through `subagent-driven-development`
+- Stage 10 leaf delegates: `implementer`, `spec-reviewer`, and `code-quality-reviewer`
+- Maximum depth: `software-builder -> stage delegate -> stage-10 leaf delegate`
+
+If any delegate proposes deeper delegation, stop and escalate as `BLOCKED`.
+
+## Universal Subagent Return Contract
+
+Every delegate return from Stage 1 through Stage 12 must follow [references/subagent-return-contract.md](references/subagent-return-contract.md), including Stage 4 (`translating-shape-to-spec`).
+
+1. Require the contract when dispatching each delegate.
+2. Reject returns that omit budget snapshot or trace metadata.
+3. Allow `unknown` values only when a metric is unavailable; include a reason.
+4. Persist every accepted return in `stage-subagent-returns.md` in the plan directory.
+
 ## Required Stage Documents
 
 Every stage must produce or refresh a reviewable document artifact. Keep a stage document register that links all current artifact paths.
@@ -51,9 +72,10 @@ Every stage must produce or refresh a reviewable document artifact. Keep a stage
 7. Stage 7 (`designing-clean-architecture` + `writing-technical-specifications`): Technical spec document with architecture decisions and code contracts (signatures, effects, data types)
 8. Stage 8 (`creating-implementation-plan`): Draft implementation plan document
 9. Stage 9 (`iterating-plans`): Finalized implementation plan document (or explicit revision of Stage 8 document)
-10. Stage 10 (`subagent-driven-development`): Implementation execution log per slice (what was built, test loops run, and verification evidence)
+10. Stage 10 (`subagent-driven-development`): `stage-10-execution-log.md` and `stage-10-subagent-returns.md` (per-dispatch returns with budget and trace metadata)
 11. Stage 11 (`verifying-feature-quality`): QA verification report tied to acceptance criteria
 12. Stage 12 (`maintaining-artifact-consistency`): Artifact consistency report documenting ripple updates and final alignment status
+13. Cross-stage (`software-builder` controller): `stage-subagent-returns.md` (append-only markdown ledger of every stage delegate return, including budget and trace metadata)
 
 If a stage updates an existing artifact instead of creating a new file, record the update in the stage document register with the current path and revision context.
 
@@ -159,6 +181,8 @@ Before each handoff, verify:
 - The current stage has a produced or refreshed document artifact linked in the stage document register
 - The stage started from a clean working copy (`jj status`)
 - The stage ended with `jj describe` and handed off via `jj new`
+- `stage-subagent-returns.md` has an entry for every delegate call made in the current stage
+- Each entry follows `references/subagent-return-contract.md` and includes budget + trace metadata
 - No major cross-artifact conflict is unresolved
 - Open questions are visible, not buried
 - For Stage 1 -> Stage 2, human teach-back of both problem and desired outcome is captured and aligned
@@ -168,6 +192,7 @@ Before each handoff, verify:
 - For Stage 7 -> Stage 8, technical design and code contracts are explicit and approved
 - For Stage 8 -> Stage 9, the draft implementation plan exists and has completed a brainstorming walkthrough with captured human feedback
 - For Stage 9 -> Stage 10, the iterated plan is explicitly approved through brainstorming and maps each slice to functional and technical contracts, identifies parallelizable slices/chunks, defines a `using-jj-workspaces` strategy for parallel work, and includes a dependency/service delta map with explicit per-slice ownership and verification commands
+- For Stage 10 -> Stage 11, `stage-10-execution-log.md` and `stage-10-subagent-returns.md` exist and are linked from `stage-subagent-returns.md`
 
 Stop forward progress when artifacts disagree.
 
@@ -177,6 +202,8 @@ Stop forward progress when artifacts disagree.
 - Do not proceed from framing to shaping without human teach-back of problem and desired outcome
 - Do not summarize expected answers before any teach-back; summarize only after teach-back passes
 - Do not complete any stage without a produced or refreshed document artifact for that stage
+- Do not accept any delegate return that omits budget + trace metadata required by `references/subagent-return-contract.md`
+- Do not continue a stage until its delegate return is persisted to `stage-subagent-returns.md`
 - Do not start any stage from a dirty working copy; enforce `jj status` cleanliness first
 - Do not move to the next stage without a stage checkpoint message (`jj describe`) and a fresh next-stage working copy (`jj new`)
 - Do not finalize Stage 3 without conversational breadboarding review and explicit approval unless the user explicitly opts out
@@ -188,6 +215,8 @@ Stop forward progress when artifacts disagree.
 - Do not add new dependencies or third-party services in a slice unless that slice (or an explicitly justified shared enablement slice) owns the change and its verification
 - Do not default to serial execution when independent slices can be run in parallel safely
 - Do not execute parallel chunks in one shared working copy by default; use `using-jj-workspaces` unless there is a documented reason not to
+- Do not exceed bounded delegation depth (`software-builder -> stage delegate -> stage-10 leaf delegate`)
+- Do not finalize Stage 10 without both `stage-10-execution-log.md` and `stage-10-subagent-returns.md`
 - Do not let requirements disappear between shaping and spec
 - Do not allow implementation to invent behavior outside the functional spec
 - Do not accept slices without QA evidence tied to acceptance criteria

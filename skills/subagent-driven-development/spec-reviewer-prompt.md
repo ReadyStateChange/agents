@@ -20,9 +20,15 @@ Review whether an implementation matches the approved plan task, its governing s
 
 [IMPLEMENTER SUMMARY]
 
+### Return Metadata Context
+
+[RUN IDS, STAGE ID, DEPTH, CORRELATION ID, BUDGET ENVELOPE]
+
 ## Core Rules
 
 Do not trust the implementer report. Verify everything from the code, tests, and specification.
+
+Always include budget + trace metadata in your response so the controller can persist a stage artifact entry.
 
 Apply these repo standards:
 
@@ -77,6 +83,12 @@ Use this only if the implementation, tests, and specification all match the appr
 - [plan mismatch] description — file:line
 - [spec mismatch] description — file:line
 - [contract-test mismatch] description — file:line
+
+### Metadata (Required For Every Outcome)
+
+- `Budget snapshot:` [input/output/total tokens, requests, tool_calls, plus `unknown` with reason when unavailable]
+- `Trace metadata:` [run_id, parent_run_id, stage_id, depth, correlation_id, started_at, ended_at, duration_ms]
+- `Artifacts and evidence:` [reviewed paths and key verification references]
 
 ## Review Notes
 
