@@ -12,7 +12,7 @@ Tests must verify behavior promised by the specification, not behavior that happ
 
 **Core principle:** if an assertion cannot be traced back to the specification, it is suspect.
 
-Use this reference with `writing-specifications` and `specification-driven-tdd`.
+Use this reference with `writing-technical-specifications` and `specification-driven-tdd`.
 
 ## Gate Before Any Test Assertion
 

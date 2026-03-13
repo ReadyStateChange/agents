@@ -113,7 +113,7 @@ Use this skill alongside the existing repo skills:
 - `implementing-plans` for phase ordering, dependency handling, and verification expectations
 - `using-jj-workspaces` when isolated JJ workspaces are the safer execution path
 - `specification-driven-tdd` for the implementation loop inside each task
-- `writing-specifications` when the governing contract is missing or incomplete
+- `writing-technical-specifications` when the governing contract is missing or incomplete
 
 ## Companion Resources
 

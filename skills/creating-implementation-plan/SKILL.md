@@ -1,9 +1,9 @@
 ---
-name: creating-implementations-plans
-description: "Creates detailed specification-first implementation plans through interactive research and iteration. Consolidates creating-plans and creating-implementation-plans into one canonical skill. Use when you say: 'plan this feature', 'create a plan', 'write an implementation spec', 'design doc for...', 'technical spec', or 'plan the rollout for...'."
+name: creating-implementation-plan
+description: "Creates detailed specification-first implementation plans through interactive research and iteration. Use when you say: 'plan this feature', 'create a plan', 'write an implementation spec', 'design doc for...', 'technical spec', or 'plan the rollout for...'."
 ---
 
-# Creating Implementations Plans
+# Creating Implementation Plan
 
 Create detailed implementation plans through interactive, iterative research. Be skeptical, thorough, and collaborative. The specification is the source of truth: phases, tests, and verification must all trace back to explicit contracts.
 
@@ -13,7 +13,7 @@ Create detailed implementation plans through interactive, iterative research. Be
 2. **If a file path, ticket, or specification was provided**: read it fully and begin research
 3. **Identify the contracts that will change**:
    - If an implementation-independent specification already exists, use it
-   - If the task changes behavior and no specification exists yet, invoke `writing-specifications` before designing phases
+   - If the task changes behavior and no specification exists yet, invoke `writing-technical-specifications` before designing phases
    - If the intended behavior is ambiguous, resolve that ambiguity before planning
 4. **If no input provided**, ask:
    - The task/ticket description or reference
@@ -38,7 +38,7 @@ Create detailed implementation plans through interactive, iterative research. Be
 Before designing phases:
 
 1. Identify each new or changed contract the work will touch
-2. Link the existing specification sections that govern those contracts, or write/refine them with `writing-specifications`
+2. Link the existing specification sections that govern those contracts, or write/refine them with `writing-technical-specifications`
 3. If a contract introduces a new domain type, include its type definition in the specification and make illegal states unrepresentable; prefer branded or opaque types over raw primitives
 4. Separate **contract changes** from **implementation changes**
 5. Reject plans that would change behavior without an explicit specification delta

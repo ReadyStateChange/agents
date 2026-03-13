@@ -1,9 +1,9 @@
 ---
-name: writing-specifications
-description: "Writes formal function/method specifications with preconditions and postconditions. Use when writing specs, documenting function contracts, adding JSDoc/docstrings, or asked to specify behavior."
+name: writing-technical-specifications
+description: "Writes technical function and method specifications with preconditions and postconditions. Use when drafting technical specs, documenting function contracts, adding JSDoc/docstrings, or asked to specify behavior."
 ---
 
-# Writing Specifications
+# Writing Technical Specifications
 
 Write precise, implementation-independent function specifications using the **signature + effects** pattern. Specifications must define behavior for **all** representable inputs — no undefined behavior.
 

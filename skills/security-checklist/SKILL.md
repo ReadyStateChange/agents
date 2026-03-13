@@ -1,6 +1,6 @@
 ---
 name: security-checklist
-description: "Runs a security review against plans, code changes, or architecture decisions. Integrates with creating-implementations-plans, iterating-plans, and requesting-code-review. Use when you say: 'security check', 'review security', 'check for vulnerabilities', 'security audit'."
+description: "Runs a security review against plans, code changes, or architecture decisions. Integrates with creating-implementation-plan, iterating-plans, and requesting-code-review. Use when you say: 'security check', 'review security', 'check for vulnerabilities', 'security audit'."
 ---
 
 # Security Checklist
@@ -10,7 +10,7 @@ Run a structured security review against plans, code changes, or architecture de
 ## When to Use
 
 **Mandatory integration points:**
-- During `creating-implementations-plans` — after Step 4 (Plan Structure), before writing the final plan
+- During `creating-implementation-plan` — after Step 4 (Plan Structure), before writing the final plan
 - During `iterating-plans` — when changes touch authentication, authorization, data handling, external APIs, or secrets
 - During `requesting-code-review` — dispatched alongside the code-reviewer subagent
 
@@ -119,7 +119,7 @@ jj diff --from {FROM_REV} --to {TO_REV} --stat
 
 ## Integration with Other Skills
 
-**creating-implementations-plans:**
+**creating-implementation-plan:**
 After the plan structure is confirmed (Step 4) and before writing the final plan (Step 5), run the plan-mode checklist. Add the `## Security Review` section to the plan output.
 
 **iterating-plans:**

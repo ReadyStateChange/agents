@@ -95,7 +95,7 @@ For each phase:
 3. Run `jj status` and confirm the phase starts from a clean working copy before code changes; if dirty, stop and run `jj new`, then re-check phase dependencies.
 4. Confirm the phase's governing specification. If it is missing or wrong, stop and fix the plan/spec first.
 5. Confirm the phase includes a `Phase Test Strategy` and `Phase Test Checklist`. If missing, stop and repair the plan before implementing.
-6. If the phase changes behavior, write or refine the specification with `writing-specifications` before touching production code.
+6. If the phase changes behavior, write or refine the specification with `writing-technical-specifications` before touching production code.
 7. If that specification introduces a new type, add the type definition to the specification using branded/opaque domain types or another form that makes illegal states unrepresentable.
 8. Pick the next unchecked test item from the phase's `Phase Test Checklist`.
 9. Write exactly one minimal failing contract test derived directly from that specification and checklist item.

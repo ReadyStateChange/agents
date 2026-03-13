@@ -11,7 +11,7 @@ A collection of reusable skills for AI coding agents.
 | **breadboarding** | Transforms workflows into UI and Code affordance tables with wiring to map or design systems |
 | **creating-handoffs** | Creates concise handoff documents with status, decisions, artifacts, and next actions |
 | **conversational-shaping** | Facilitates human-led shaping through one-question-at-a-time dialogue and requires teach-back before completion |
-| **creating-implementations-plans** | Creates detailed implementation plans through interactive research and iteration |
+| **creating-implementation-plan** | Creates detailed implementation plans through interactive research and iteration |
 | **designing-clean-architecture** | Designs and reviews systems using clean architecture placement rules |
 | **describing-pull-requests** | Generates or updates pull request descriptions from diffs, commits, and repository templates |
 | **finishing-a-development-branch** | Guides completion of development work with structured options for merge, PR, or cleanup |
@@ -38,16 +38,7 @@ A collection of reusable skills for AI coding agents.
 | **verification-before-completion** | Requires running verification commands and confirming evidence before claiming completion |
 | **verifying-feature-quality** | Plans and executes feature-level QA verification tied to spec promises and acceptance criteria |
 | **writing-functional-specs** | Finalizes feature-level functional specs with explicit behavior and acceptance criteria |
-| **writing-specifications** | Writes formal function/method specifications with preconditions and postconditions |
-
-## Legacy Aliases (Redirects)
-
-These names are kept for backward compatibility with older prompts. They should redirect to the listed canonical skill.
-
-| Alias | Redirects To | Notes |
-|-------|--------------|-------|
-| **creating-plans** | **creating-implementations-plans** | Legacy name; use canonical skill for new prompts |
-| **creating-implementation-plans** | **creating-implementations-plans** | Legacy singular variant; use canonical skill for new prompts |
+| **writing-technical-specifications** | Writes technical function/method specifications with preconditions and postconditions |
 
 ## Syncing Skill Links
 
@@ -62,3 +53,24 @@ Useful options:
 - `--force-replace` replaces conflicting non-symlink entries.
 - `--no-prune` keeps stale source-managed symlinks instead of removing them.
 - `--source <path>` syncs from a different source skill directory.
+
+## Syncing Agent Links
+
+Use the agent sync script to mirror repo-managed agent files into both Claude and OpenCode:
+
+```bash
+./scripts/sync-agent-links.sh
+```
+
+Agent source files are discovered under `skills/*/agents` using platform suffixes:
+
+- `*.claude.md` syncs to `~/.claude/agents/<name>.md`
+- `*.opencode.md` syncs to `~/.config/opencode/agents/<name>.md`
+
+Useful options:
+
+- `--force-replace` replaces conflicting non-symlink entries.
+- `--no-prune` keeps stale source-managed symlinks instead of removing them.
+- `--source <path>` overrides the source skills directory.
+- `--claude-target <path>` overrides the Claude agents target directory.
+- `--opencode-target <path>` overrides the OpenCode agents target directory.

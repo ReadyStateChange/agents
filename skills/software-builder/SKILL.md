@@ -27,12 +27,12 @@ Run stages in this order unless a later stage exposes a defect in earlier truth.
 
 1. Frame the problem with `framing-problems`
 2. Shape requirements and fit using `conversational-shaping` by default (`shaping` only when the user explicitly prefers non-conversational shaping)
-3. Breadboard selected shape with `breadboarding`
+3. Breadboard selected shape with `conversational-breadboarding` by default (`breadboarding` only when the user explicitly prefers non-conversational breadboarding)
 4. Translate shape into draft spec with `translating-shape-to-spec`
 5. Define vertical, demoable increments with `slicing-work`
 6. Finalize functional behavior contract with `writing-functional-specs` after a `brainstorming` conversation with the human
-7. Finalize technical design with `designing-clean-architecture` and write code-level contracts with `writing-specifications` after a `brainstorming` conversation with the human
-8. Draft a slice-by-slice execution plan with `creating-implementations-plans` using the functional spec, technical spec, and slices
+7. Finalize technical design with `designing-clean-architecture` and write code-level contracts with `writing-technical-specifications` after a `brainstorming` conversation with the human
+8. Draft a slice-by-slice execution plan with `creating-implementation-plan` using the functional spec, technical spec, and slices
 9. Refine and lock the plan with `iterating-plans` after human review
 10. Implement one slice at a time with `subagent-driven-development` (which enforces `specification-driven-tdd`)
 11. Verify each slice and final feature with `verifying-feature-quality`
@@ -44,12 +44,12 @@ Every stage must produce or refresh a reviewable document artifact. Keep a stage
 
 1. Stage 1 (`framing-problems`): Frame document (problem, outcome, constraints, teach-back record)
 2. Stage 2 (`conversational-shaping` or `shaping`): Shaping document (requirements, selected shape, risks, out-of-bounds, teach-back record)
-3. Stage 3 (`breadboarding`): Breadboard document (affordance tables and wiring)
+3. Stage 3 (`conversational-breadboarding` or `breadboarding`): Breadboard document (affordance tables and wiring plus conversation decisions/approval record when conversational mode is used)
 4. Stage 4 (`translating-shape-to-spec`): Draft functional spec document
 5. Stage 5 (`slicing-work`): Slices document with dependency map
 6. Stage 6 (`writing-functional-specs`): Final functional spec document
-7. Stage 7 (`designing-clean-architecture` + `writing-specifications`): Technical spec document with architecture decisions and code contracts (signatures, effects, data types)
-8. Stage 8 (`creating-implementations-plans`): Draft implementation plan document
+7. Stage 7 (`designing-clean-architecture` + `writing-technical-specifications`): Technical spec document with architecture decisions and code contracts (signatures, effects, data types)
+8. Stage 8 (`creating-implementation-plan`): Draft implementation plan document
 9. Stage 9 (`iterating-plans`): Finalized implementation plan document (or explicit revision of Stage 8 document)
 10. Stage 10 (`subagent-driven-development`): Implementation execution log per slice (what was built, test loops run, and verification evidence)
 11. Stage 11 (`verifying-feature-quality`): QA verification report tied to acceptance criteria
@@ -91,13 +91,25 @@ Apply this ordering to every teach-back in this lifecycle (including delegated s
 
 Do not provide answer-revealing summaries before or between teach-back attempts.
 
+## Breadboarding Conversation Gate
+
+Before finalizing Stage 3 artifacts, run conversational back-and-forth using `conversational-breadboarding` (which invokes `brainstorming`).
+
+1. Use `brainstorming` to resolve ambiguous place boundaries, affordance identity, and wiring
+2. Re-render the full affected affordance tables after each meaningful revision
+3. Capture human-reviewed decisions and unresolved questions
+4. Get explicit human approval of the Stage 3 breadboard artifact
+5. Only then proceed to Stage 4
+
+Default behavior: Stage 3 uses `conversational-breadboarding` unless the user explicitly opts out.
+
 ## Spec And Technical Design Conversation Gates
 
 Before finalizing Stage 6 and Stage 7 artifacts, run conversational back-and-forth using `brainstorming`.
 
 1. Use `brainstorming` to explore ambiguities, trade-offs, and edge cases with the human
 2. Present the proposed functional spec or technical spec sections
-3. For Stage 7, invoke `writing-specifications` to draft code contracts in the technical spec, including function/module signatures, effects (outputs, side effects, and errors), and data type definitions/invariants
+3. For Stage 7, invoke `writing-technical-specifications` to draft code contracts in the technical spec, including function/module signatures, effects (outputs, side effects, and errors), and data type definitions/invariants
 4. Get explicit human approval of the proposed sections and contract set
 5. Only then finalize the corresponding artifact
 
@@ -107,7 +119,7 @@ Default behavior: Stage 6 and Stage 7 use `brainstorming` unless the user explic
 
 Before implementation starts, Stage 8 and Stage 9 must produce a human-reviewed implementation plan from Stage 5, Stage 6, and Stage 7 artifacts.
 
-1. Invoke `creating-implementations-plans` to draft the initial slice-by-slice plan
+1. Invoke `creating-implementation-plan` to draft the initial slice-by-slice plan
 2. Invoke `brainstorming` to walk through the draft plan with the human and collect refinement feedback
 3. Invoke `iterating-plans` to apply refinements surgically to the draft
 4. Invoke `brainstorming` again to walk through the revised plan and secure explicit approval
@@ -150,8 +162,9 @@ Before each handoff, verify:
 - No major cross-artifact conflict is unresolved
 - Open questions are visible, not buried
 - For Stage 1 -> Stage 2, human teach-back of both problem and desired outcome is captured and aligned
+- For Stage 3 -> Stage 4, conversational breadboarding review is complete and Stage 3 has explicit human approval (or explicit user opt-out to non-conversational mode)
 - For Stage 5 -> Stage 6, brainstorming-based human review of functional spec sections is complete
-- For Stage 6 -> Stage 7, brainstorming-based human review of technical design sections is complete and `writing-specifications` contracts are present (signatures, effects, data types)
+- For Stage 6 -> Stage 7, brainstorming-based human review of technical design sections is complete and `writing-technical-specifications` contracts are present (signatures, effects, data types)
 - For Stage 7 -> Stage 8, technical design and code contracts are explicit and approved
 - For Stage 8 -> Stage 9, the draft implementation plan exists and has completed a brainstorming walkthrough with captured human feedback
 - For Stage 9 -> Stage 10, the iterated plan is explicitly approved through brainstorming and maps each slice to functional and technical contracts, identifies parallelizable slices/chunks, defines a `using-jj-workspaces` strategy for parallel work, and includes a dependency/service delta map with explicit per-slice ownership and verification commands
@@ -166,8 +179,9 @@ Stop forward progress when artifacts disagree.
 - Do not complete any stage without a produced or refreshed document artifact for that stage
 - Do not start any stage from a dirty working copy; enforce `jj status` cleanliness first
 - Do not move to the next stage without a stage checkpoint message (`jj describe`) and a fresh next-stage working copy (`jj new`)
+- Do not finalize Stage 3 without conversational breadboarding review and explicit approval unless the user explicitly opts out
 - Do not finalize functional spec or technical design without brainstorming-based human back-and-forth and approval
-- Do not finalize Stage 7 without `writing-specifications`-style code contracts (function/module signatures, effects, and data type definitions)
+- Do not finalize Stage 7 without `writing-technical-specifications`-style code contracts (function/module signatures, effects, and data type definitions)
 - Do not finalize Stage 8 or Stage 9 without brainstorming-based human walkthrough and explicit approval
 - Do not start implementation without an iterated slice-by-slice implementation plan that traces to functional and technical specs
 - Do not start implementation when dependency or third-party deltas are implied but not declared in the plan
@@ -185,11 +199,12 @@ Use these existing skills as the default delegates:
 
 - `conversational-shaping` (default)
 - `shaping` (fallback when a non-conversational shaping mode is explicitly requested)
-- `brainstorming` (default for Stage 6 through Stage 9 collaborative review)
-- `breadboarding`
+- `conversational-breadboarding` (default)
+- `breadboarding` (fallback when a non-conversational breadboarding mode is explicitly requested)
+- `brainstorming` (default for Stage 3 and Stage 6 through Stage 9 collaborative review)
 - `designing-clean-architecture`
-- `writing-specifications`
-- `creating-implementations-plans`
+- `writing-technical-specifications`
+- `creating-implementation-plan`
 - `iterating-plans`
 - `using-jj-workspaces`
 - `subagent-driven-development`

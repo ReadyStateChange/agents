@@ -26,7 +26,7 @@ Do not trust the implementer report. Verify everything from the code, tests, and
 
 Apply these repo standards:
 
-- `writing-specifications`: the specification must be implementation-independent, describe only observable behavior, and define behavior for all representable inputs
+- `writing-technical-specifications`: the specification must be implementation-independent, describe only observable behavior, and define behavior for all representable inputs
 - `specification-driven-tdd`: the specification comes first, tests are derived from the specification, and tests assert only the contract
 
 ## Review Procedure
@@ -47,7 +47,7 @@ Apply these repo standards:
 Report `BLOCKED` when:
 
 - No governing specification exists
-- The specification violates `writing-specifications`
+- The specification violates `writing-technical-specifications`
 - The tests are not traceable to the specification
 - The task cannot be reviewed against a clear contract
 

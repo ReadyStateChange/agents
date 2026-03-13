@@ -63,7 +63,7 @@ Use it as the source of truth. Do not widen the contract silently while testing.
 Write a specification for the function/class/module before testing it.
 
 Rules:
-- The specification must follow the `writing-specifications` skill
+- The specification must follow the `writing-technical-specifications` skill
 - The specification must describe only observable behavior
 - The specification must not mention algorithms, helper methods, private fields, data structures, query shape, call ordering, or other implementation details
 - If the existing code suggests multiple plausible contracts, ask the human which one is intended
@@ -72,7 +72,7 @@ After the specification is written, delete the untested implementation and resta
 
 ### If neither code nor specification exists
 
-Invoke `writing-specifications`.
+Invoke `writing-technical-specifications`.
 
 If you know the intended behavior well enough, write the specification.
 
@@ -106,7 +106,7 @@ When writing or reviewing tests, adding mocks, or considering test-only producti
 
 ### SPEC - Write the Contract
 
-Write or refine the specification using `writing-specifications`.
+Write or refine the specification using `writing-technical-specifications`.
 
 Good specifications:
 - Define behavior for all representable inputs
@@ -250,7 +250,7 @@ Do not:
 Before marking work complete:
 
 - [ ] A specification exists for each new or changed contract
-- [ ] The specification follows `writing-specifications`
+- [ ] The specification follows `writing-technical-specifications`
 - [ ] The specification contains no implementation details
 - [ ] Every new behavior has a failing contract test first
 - [ ] Each failing test failed for the expected reason
