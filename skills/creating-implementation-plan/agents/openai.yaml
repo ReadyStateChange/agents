@@ -1,0 +1,4 @@
+interface:
+  display_name: "Implementation Plan Delegate"
+  short_description: "Draft slice-first implementation plan tied to specs"
+  default_prompt: "Use $creating-implementation-plan to draft a slice-first implementation plan mapped to functional and technical contracts. Return using the software-builder subagent return contract with Status, Artifact updates, Budget snapshot, Trace metadata, Verification references, and Next action."

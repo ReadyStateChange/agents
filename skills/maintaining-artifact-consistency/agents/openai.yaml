@@ -1,4 +1,4 @@
 interface:
   display_name: "Consistency Delegate"
   short_description: "Keep all lifecycle artifacts synchronized as truth changes"
-  default_prompt: "Use $maintaining-artifact-consistency to resolve cross-artifact conflicts and apply ripple updates across the lifecycle."
+  default_prompt: "Use $maintaining-artifact-consistency to resolve cross-artifact conflicts, apply ripple updates across the lifecycle, and return using the software-builder subagent return contract with budget + trace metadata."

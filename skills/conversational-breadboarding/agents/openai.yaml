@@ -1,0 +1,4 @@
+interface:
+  display_name: "Conversational Breadboarding Delegate"
+  short_description: "Run human-in-the-loop breadboarding with explicit approval"
+  default_prompt: "Use $conversational-breadboarding to iteratively build affordance tables with human review and explicit approval. Return using the software-builder subagent return contract with Status, Artifact updates, Budget snapshot, Trace metadata, Verification references, and Next action."

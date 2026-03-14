@@ -1,4 +1,4 @@
 interface:
   display_name: "Architecture Designer"
-  short_description: "Design clean architecture boundaries and placement"
-  default_prompt: "Use $designing-clean-architecture to place logic across domain/application/adapters/infrastructure for this system and flag layering violations."
+  short_description: "Finalize clean architecture boundary and placement decisions"
+  default_prompt: "Use $designing-clean-architecture to place logic across domain/application/adapters/infrastructure and document approved boundary decisions. Return using the software-builder subagent return contract with Status, Artifact updates, Budget snapshot, Trace metadata, Verification references, and Next action."

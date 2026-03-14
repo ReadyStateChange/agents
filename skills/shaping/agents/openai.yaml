@@ -1,0 +1,4 @@
+interface:
+  display_name: "Shaping Delegate"
+  short_description: "Run non-conversational shaping when explicitly requested"
+  default_prompt: "Use $shaping to produce the selected shape artifact when non-conversational shaping is explicitly requested. Return using the software-builder subagent return contract with Status, Artifact updates, Budget snapshot, Trace metadata, Verification references, and Next action."

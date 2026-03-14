@@ -1,4 +1,4 @@
 interface:
   display_name: "Slicing Delegate"
   short_description: "Create vertical, demoable implementation slices"
-  default_prompt: "Use $slicing-work to cut this shaped solution into sequenced, demoable slices with clear acceptance hooks."
+  default_prompt: "Use $slicing-work to cut shaped work into sequenced, vertical, demoable slices with explicit dependencies. Return using the software-builder subagent return contract with Status, Artifact updates, Budget snapshot, Trace metadata, Verification references, and Next action."

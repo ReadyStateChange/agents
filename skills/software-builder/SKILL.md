@@ -44,6 +44,7 @@ Use bounded nested orchestration.
 
 - Level 0 orchestrator: `software-builder`
 - Level 1 delegates: one stage delegate at a time (`framing-problems` through `maintaining-artifact-consistency`)
+- Level 1 delegates must run through stage agent definitions in each skill's `agents/` directory (Claude/OpenCode/OpenAI surfaces)
 - Level 2 delegates: allowed only inside Stage 10 through `subagent-driven-development`
 - Stage 10 leaf delegates: `implementer`, `spec-reviewer`, and `code-quality-reviewer`
 - Maximum depth: `software-builder -> stage delegate -> stage-10 leaf delegate`
@@ -52,7 +53,7 @@ If any delegate proposes deeper delegation, stop and escalate as `BLOCKED`.
 
 ## Universal Subagent Return Contract
 
-Every delegate return from Stage 1 through Stage 12 must follow [references/subagent-return-contract.md](references/subagent-return-contract.md), including Stage 4 (`translating-shape-to-spec`).
+Every agent return from Stage 1 through Stage 12 must follow [references/subagent-return-contract.md](references/subagent-return-contract.md), including Stage 4 (`translating-shape-to-spec`) and Stage 10 nested delegates.
 
 1. Require the contract when dispatching each delegate.
 2. Reject returns that omit budget snapshot or trace metadata.

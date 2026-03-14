@@ -1,0 +1,4 @@
+interface:
+  display_name: "Conversational Shaping Delegate"
+  short_description: "Run human-led shaping with teach-back gate"
+  default_prompt: "Use $conversational-shaping to run a one-question-at-a-time shaping conversation and finalize a teach-back validated shaping artifact. Return using the software-builder subagent return contract with Status, Artifact updates, Budget snapshot, Trace metadata, Verification references, and Next action."

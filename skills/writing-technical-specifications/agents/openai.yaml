@@ -1,0 +1,4 @@
+interface:
+  display_name: "Technical Spec Delegate"
+  short_description: "Write technical contracts with signatures and effects"
+  default_prompt: "Use $writing-technical-specifications to produce code-level contracts with signatures, effects, errors, and data invariants. Return using the software-builder subagent return contract with Status, Artifact updates, Budget snapshot, Trace metadata, Verification references, and Next action."

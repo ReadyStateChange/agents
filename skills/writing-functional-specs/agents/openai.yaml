@@ -1,4 +1,4 @@
 interface:
   display_name: "Functional Spec Delegate"
-  short_description: "Finalize feature behavior contracts and acceptance criteria"
-  default_prompt: "Use $writing-functional-specs to produce an implementation-ready functional spec with explicit acceptance criteria."
+  short_description: "Finalize functional behavior contract and acceptance criteria"
+  default_prompt: "Use $writing-functional-specs to finalize implementation-ready functional behavior and acceptance criteria after required human review. Return using the software-builder subagent return contract with Status, Artifact updates, Budget snapshot, Trace metadata, Verification references, and Next action."

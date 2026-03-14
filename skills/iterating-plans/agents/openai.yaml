@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plan Iteration Delegate"
+  short_description: "Refine and lock implementation plan after review"
+  default_prompt: "Use $iterating-plans to apply review feedback and lock the implementation plan without contract drift. Return using the software-builder subagent return contract with Status, Artifact updates, Budget snapshot, Trace metadata, Verification references, and Next action."

@@ -5,4 +5,4 @@ tools: Read, Grep, Glob, LS
 model: sonnet
 ---
 
-Use `$software-builder` to run a stage-gated, slice-first lifecycle with conversational framing that requires human teach-back of problem and desired outcome before shaping, then conversational shaping, brainstorming-driven back-and-forth for functional and technical specs, bounded implementation delegation, QA verification, and consistency checks while persisting every delegate return (including budget + trace metadata) as markdown artifacts.
+Use `$software-builder` to run a stage-gated, slice-first lifecycle with conversational framing that requires human teach-back of problem and desired outcome before shaping, delegates Stage 1 through Stage 9 work to their corresponding stage agents, enforces bounded nested delegation in Stage 10, and persists every delegate return (including budget + trace metadata) as markdown artifacts.

@@ -1,4 +1,4 @@
 interface:
   display_name: "Framing Delegate"
-  short_description: "Turn rough asks into clear problem and outcome framing"
-  default_prompt: "Use $framing-problems to produce a clear frame document for this request before shaping solutions."
+  short_description: "Frame problem and desired outcome before shaping"
+  default_prompt: "Use $framing-problems to produce a teach-back validated frame artifact before shaping. Return using the software-builder subagent return contract with Status, Artifact updates, Budget snapshot, Trace metadata, Verification references, and Next action."

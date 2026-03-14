@@ -1,0 +1,4 @@
+interface:
+  display_name: "Breadboarding Delegate"
+  short_description: "Run non-conversational breadboarding when explicitly requested"
+  default_prompt: "Use $breadboarding to produce breadboard affordance tables and wiring when non-conversational mode is explicitly requested. Return using the software-builder subagent return contract with Status, Artifact updates, Budget snapshot, Trace metadata, Verification references, and Next action."
