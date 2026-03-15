@@ -5,7 +5,7 @@ description: "Execute an approved implementation plan in the current session by 
 
 # Subagent-Driven Development
 
-Execute an approved plan by acting as the controller. Keep the work in the current session, dispatch a fresh implementer subagent per task, and enforce two review gates in order: spec compliance first, code quality second.
+Execute an approved plan by acting as the controller. Keep the work in the current session, dispatch a fresh implementer subagent per task, and enforce two review gates in order: spec compliance first, code quality second. For JavaScript/TypeScript work, carry the approved testing guidance from Stage 7 and the active phase plan into every implementer dispatch.
 
 This skill is an execution mode on top of the existing plan workflow in this repo. Reuse the repo's plan, JJ workspace, and specification-first rules instead of restating them.
 
@@ -41,6 +41,7 @@ If deeper delegation is proposed, stop and return `BLOCKED` to the caller.
 4. For the active task, prepare a complete subagent brief:
    - Full task text
    - Governing specification
+   - Approved JavaScript/TypeScript testing guidance when applicable (Stage 7 testing strategy plus the active phase test strategy and phase test plan)
    - Dependency context and where the task fits in the plan
    - Relevant files and constraints
    - Required automated verification
@@ -48,7 +49,7 @@ If deeper delegation is proposed, stop and return `BLOCKED` to the caller.
    - Budget envelope and remaining budget
 5. Dispatch a fresh implementer subagent with `implementer-prompt.md`. Do not make the subagent rediscover the whole plan when the controller can provide the relevant context directly.
 6. For every subagent return (including retries, `BLOCKED`, and `NEEDS_CONTEXT`), append an entry to `stage-10-subagent-returns.md` before deciding what to do next.
-7. Require the implementer to follow `specification-driven-tdd` and the active phase rules from `implementing-plans`.
+7. Require the implementer to follow `specification-driven-tdd` and the active phase rules from `implementing-plans`. For JavaScript/TypeScript tasks, require the implementer to honor the approved testing guidance shaped by `javascript-testing-expert`.
 8. When implementation returns, run spec-compliance review with `spec-reviewer-prompt.md`.
 9. If spec review finds issues, send the task back to the implementer, then rerun spec review until it passes.
 10. Only after spec review passes, run code-quality review with `code-quality-reviewer-prompt.md`.
@@ -78,7 +79,7 @@ The controller owns workflow state across the whole task loop.
 Use the companion prompts in this order for every task:
 
 1. `implementer-prompt.md`
-   Provide the task text, governing specification, context, constraints, and required verification.
+   Provide the task text, governing specification, approved JavaScript/TypeScript testing guidance when applicable, context, constraints, and required verification.
 2. `spec-reviewer-prompt.md`
    Provide the approved plan task, governing specification, relevant tests, and implementer output.
 3. `code-quality-reviewer-prompt.md`
@@ -132,6 +133,7 @@ Never start code-quality review before spec-compliance review passes. A clean im
 - Do not start implementation without an approved plan.
 - Do not bypass the governing specification.
 - Do not skip `specification-driven-tdd`.
+- Do not let the implementer invent a conflicting JavaScript/TypeScript testing approach when approved Stage 7 or phase testing guidance exists.
 - Do not ask the implementer to read the entire plan if the controller can provide the relevant excerpt and context.
 - Do not continue past unresolved review findings.
 - Do not treat implementer self-review as a substitute for spec review or code-quality review.
@@ -149,6 +151,7 @@ Use this skill alongside the existing repo skills:
 - `implementing-plans` for phase ordering, dependency handling, and verification expectations
 - `using-jj-workspaces` when isolated JJ workspaces are the safer execution path
 - `specification-driven-tdd` for the implementation loop inside each task
+- `javascript-testing-expert` for JavaScript/TypeScript testing guidance that comes from the approved technical spec and plan
 - `writing-technical-specifications` when the governing contract is missing or incomplete
 
 ## Companion Resources

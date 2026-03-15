@@ -1,6 +1,6 @@
 ---
 name: specification-driven-tdd
-description: "Use when implementing features or bug fixes with contract-first TDD. Requires an implementation-independent specification before tests, and tests only the specification, not the implementation."
+description: "Use when implementing features or bug fixes with contract-first TDD. Requires an implementation-independent specification before tests, and tests only the specification, not the implementation. For JavaScript/TypeScript work, also consumes approved testing guidance shaped by `javascript-testing-expert`."
 ---
 
 # Specification-Driven TDD
@@ -102,6 +102,23 @@ If a test needs one of these details to pass, either:
 
 When writing or reviewing tests, adding mocks, or considering test-only production APIs, load [references/testing-anti-patterns.md](references/testing-anti-patterns.md).
 
+## JavaScript/TypeScript Companion Guidance
+
+For JavaScript/TypeScript work, use `javascript-testing-expert` as the testing companion to this skill.
+
+When a Stage 7 technical-spec testing strategy or a per-phase test strategy/test plan exists, treat it as a required companion input:
+- The specification still defines what behavior must be proven
+- The approved testing guidance defines the allowed testing posture for that contract
+- Concrete test choice remains the implementer's job, but it must stay within the approved testing guidance
+
+Use the approved guidance to decide:
+- whether a contract should be covered primarily with example-based tests, property-based tests, or both
+- how to control time, randomness, locale, network, and other nondeterministic inputs
+- whether component work should be tested as extracted functions, DOM interaction, browser-based visual checks, or a combination
+- what to stub, what to avoid mocking, and when `msw` or other tooling is appropriate
+
+If JavaScript/TypeScript testing guidance is expected by the surrounding workflow and missing, stop and repair the upstream artifact before proceeding. If the guidance conflicts with the specification, repair the conflict instead of guessing.
+
 ## Red-Green-Refactor
 
 ### SPEC - Write the Contract
@@ -148,6 +165,7 @@ Requirements:
 - Clear test name
 - Assertion traces directly to the specification
 - Real behavior over mocks whenever possible
+- For JavaScript/TypeScript tasks, align the chosen test form with the approved testing guidance while still deriving the assertion from the specification
 - Review the test against `references/testing-anti-patterns.md` before keeping it
 
 ### Verify RED - Watch It Fail
@@ -252,10 +270,12 @@ Before marking work complete:
 - [ ] A specification exists for each new or changed contract
 - [ ] The specification follows `writing-technical-specifications`
 - [ ] The specification contains no implementation details
+- [ ] For JavaScript/TypeScript work, approved testing guidance exists when required by the surrounding workflow
 - [ ] Every new behavior has a failing contract test first
 - [ ] Each failing test failed for the expected reason
 - [ ] Any prewritten implementation was deleted before reimplementation
 - [ ] Tests assert only observable behavior promised by the specification
+- [ ] For JavaScript/TypeScript work, tests follow the approved testing guidance from `javascript-testing-expert`
 - [ ] All relevant tests pass
 - [ ] Output is clean
 

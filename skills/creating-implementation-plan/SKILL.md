@@ -5,7 +5,7 @@ description: "Creates detailed specification-first implementation plans through 
 
 # Creating Implementation Plan
 
-Create detailed implementation plans through interactive, iterative research. Be skeptical, thorough, and collaborative. The specification is the source of truth: phases, tests, and verification must all trace back to explicit contracts.
+Create detailed implementation plans through interactive, iterative research. Be skeptical, thorough, and collaborative. The specification is the source of truth: phases, tests, and verification must all trace back to explicit contracts. For JavaScript/TypeScript work, use `javascript-testing-expert` to shape the plan's per-phase test strategy and test plan from the approved Stage 7 technical-spec testing guidance.
 
 ## Getting Started
 
@@ -15,6 +15,7 @@ Create detailed implementation plans through interactive, iterative research. Be
    - If an implementation-independent specification already exists, use it
    - If the task changes behavior and no specification exists yet, invoke `writing-technical-specifications` before designing phases
    - If the intended behavior is ambiguous, resolve that ambiguity before planning
+   - If the work targets JavaScript/TypeScript, ensure the technical spec includes an approved contract-oriented testing strategy; if it does not, stop and repair Stage 7 before planning
 4. **If no input provided**, ask:
    - The task/ticket description or reference
    - Any relevant context, constraints, or requirements
@@ -60,7 +61,9 @@ After the specification is clear:
 
 Present the proposed phase structure and get feedback before writing details. Every phase must map to a specific specification slice and its contract tests. The plan must cover the whole contract for that phase, including outputs, documented errors, mutations, and side effects, while making clear that implementation proceeds one RED-GREEN-REFACTOR test at a time.
 
-Testing strategy cannot be deferred to the end of the plan. Every phase must include its own test strategy and a test checklist with explicit test items that can be checked off as each test turns GREEN.
+Testing strategy cannot be deferred to the end of the plan. Every phase must include its own test strategy, an explicit phase test plan, and a test checklist with explicit test items that can be checked off as each test turns GREEN.
+
+For JavaScript/TypeScript work, derive each phase's `Phase Test Strategy` and `Phase Test Plan` from the approved Stage 7 testing strategy by using `javascript-testing-expert`. Keep both sections plan-level and contract-oriented: they should define the intended testing posture, coverage shape, determinism controls, property-based testing opportunities, UI testing stance, stubbing requirements, and verification flow without trying to prewrite every test body.
 
 Each phase must also be self-contained. An agent handed only that phase should have everything needed to execute it independently: governing spec, relevant files, dependencies, constraints, contract-test inventory, execution order, and verification steps.
 
@@ -103,11 +106,12 @@ Use the following outline by default unless the user explicitly requests a diffe
 #### Contract N.1 checklist
 ### Specification-Driven TDD Workflow
 ### Phase Test Strategy
+### Phase Test Plan
 ### Phase Test Checklist (Mark Green During Implementation)
 ### Files
 ### Phase Gate
 
-## Cross-Phase Test Notes (Optional, Does Not Replace Phase Test Strategy)
+## Cross-Phase Test Notes (Optional, Does Not Replace Phase Test Strategy or Phase Test Plan)
 ### Unit Contracts
 ### Integration Contracts
 ### E2E Contracts
@@ -154,6 +158,7 @@ Use this template:
 - [Include one-test-at-a-time RED-GREEN-REFACTOR execution here]
 - [Include spec-first and observable-contract-only test rules here]
 - [When a contract introduces a new type, include a type definition that makes illegal states unrepresentable and use branded/opaque domain types by default]
+- [For JavaScript/TypeScript work, derive each phase's `Phase Test Strategy` and `Phase Test Plan` from the approved Stage 7 testing strategy using `javascript-testing-expert`]
 
 ## Overview
 [Brief description of what we're implementing and why]
@@ -240,7 +245,7 @@ Use this section to make parallel work the default execution model whenever depe
 - Relevant existing files: `[path/to/file]` - [why this file matters]
 - Constraints / non-goals: [phase-local limits]
 - Execution order: [run one RED-GREEN-REFACTOR loop per new contract test; do not batch tests]
-- Testing strategy source of truth: [this phase's `Phase Test Strategy` and `Phase Test Checklist`; do not defer testing detail to a later section]
+- Testing strategy source of truth: [this phase's `Phase Test Strategy`, `Phase Test Plan`, and `Phase Test Checklist`; for JavaScript/TypeScript work also cite the Stage 7 testing strategy section; do not defer testing detail to a later section]
 - Agent handoff note: [what another agent needs to know if given only this phase]
 
 ### Specifications
@@ -272,9 +277,15 @@ Use this section to make parallel work the default execution model whenever depe
 - Commands: `[targeted test command]`, `[typecheck/lint/test commands]`
 
 ### Phase Test Strategy
-- Contract-to-test mapping: [map each contract and checklist item to at least one concrete test]
-- Test levels in this phase: [unit/integration/e2e as applicable]
+- Stage 7 testing guidance reference: [required for JavaScript/TypeScript work; otherwise `n/a`]
+- Contract-to-test mapping summary: [map each contract and checklist item to the intended coverage]
+- Test levels in this phase: [unit/integration/e2e/browser as applicable]
+- Test posture constraints: [determinism controls, stubbing expectations, property-based testing guidance, UI coverage stance]
+
+### Phase Test Plan
+- Planned test additions or updates: [which test files or suites are expected to change]
 - Execution order: [risk-first sequence and why]
+- Verification commands: `[targeted test command]`, `[suite command]`, `[lint/typecheck command]`
 - Evidence capture: [where passing output/log references are recorded]
 
 ### Phase Test Checklist (Mark Green During Implementation)
@@ -293,6 +304,7 @@ Use this section to make parallel work the default execution model whenever depe
 - [ ] Contract coverage checklist covers all outputs, errors, mutations, and side effects in scope
 - [ ] Contract tests are executed one at a time and each fails for the expected reason before code is written
 - [ ] Each targeted contract test passes before the next new contract test is added
+- [ ] For JavaScript/TypeScript work, the `Phase Test Strategy` and `Phase Test Plan` trace back to the approved Stage 7 testing strategy and were shaped with `javascript-testing-expert`
 - [ ] All `Phase Test Checklist` items for this phase are checked `[x]` after turning GREEN
 - [ ] Declared dependency/service deltas for this phase are installed or provisioned and verified with explicit commands
 - [ ] Phase-specific commands pass

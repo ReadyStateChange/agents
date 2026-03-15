@@ -16,6 +16,10 @@ Implement the assigned plan task using the provided context and governing specif
 
 [FULL SPEC TEXT, SPEC PATHS, OR BOTH]
 
+### Approved Testing Guidance
+
+[FOR JAVASCRIPT/TYPESCRIPT TASKS: STAGE 7 TESTING STRATEGY PLUS THE ACTIVE PHASE TEST STRATEGY AND PHASE TEST PLAN. USE `N/A` WHEN NOT APPLICABLE.]
+
 ### Required Verification
 
 [TARGETED TESTS, TYPECHECK, LINT, AND OTHER REQUIRED CHECKS]
@@ -30,7 +34,7 @@ Implement the assigned plan task using the provided context and governing specif
 
 ## Before You Begin
 
-If the task, specification, constraints, or expected behavior are unclear, ask now.
+If the task, specification, approved testing guidance, constraints, or expected behavior are unclear, ask now.
 
 Do not guess about missing business rules.
 Do not widen the contract on your own.
@@ -44,6 +48,7 @@ Do not assume the current implementation is correct just because it exists.
 4. Do not commit, create bookmarks, or update the plan.
 5. Do not silently add extra public behavior, flags, APIs, or configuration.
 6. If you encounter missing context, stop and report it instead of guessing.
+7. For JavaScript/TypeScript tasks, use the approved testing guidance to choose test surfaces, determinism controls, and test style.
 
 ## Specification-First Rules
 
@@ -55,6 +60,9 @@ When the task changes behavior, follow `specification-driven-tdd`.
 4. Assert only observable behavior promised by the contract.
 5. Do not preserve incidental behavior unless the specification requires it.
 6. Do not add extra behavior that the specification does not promise.
+7. For JavaScript/TypeScript tasks, use `javascript-testing-expert` as companion guidance for turning the contract into tests.
+8. When approved testing guidance is provided, concrete tests must align with it; do not invent a conflicting testing approach.
+9. If the approved testing guidance conflicts with the governing specification, stop and report `BLOCKED`.
 
 ## Escalate Instead Of Guessing
 
@@ -75,6 +83,7 @@ Before reporting back, check:
 
 - Did I implement all requested behavior and nothing extra?
 - Do the tests trace to the governing specification?
+- For JavaScript/TypeScript tasks, do the tests also follow the approved testing guidance?
 - Did I avoid implementation-detail assertions?
 - Did I follow existing patterns in the codebase?
 - Are there unresolved concerns I should surface now?

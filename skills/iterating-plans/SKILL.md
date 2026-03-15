@@ -5,7 +5,7 @@ description: "Iterates on existing specification-first implementation plans with
 
 # Iterating Plans
 
-Update existing implementation plans based on user feedback with surgical precision. Preserve the specification as the source of truth; do not let the plan drift away from the contract.
+Update existing implementation plans based on user feedback with surgical precision. Preserve the specification as the source of truth; do not let the plan drift away from the contract. For JavaScript/TypeScript plans, preserve and update the per-phase testing guidance so it stays aligned with the approved Stage 7 testing strategy and `javascript-testing-expert`.
 
 ## Getting Started
 
@@ -97,6 +97,9 @@ Does this align with your intent?
    - `Step Specifications` when the phase has step-level contracts
    - `Contract Coverage Checklist`
    - `Specification-Driven TDD Workflow`
+   - `Phase Test Strategy`
+   - `Phase Test Plan`
+   - `Phase Test Checklist`
    - `Files`
    - `Phase Gate`
 8. If modifying scope, update `What We Are Not Doing`
@@ -112,6 +115,7 @@ Does this align with your intent?
 16. If the revised plan can safely create or preserve more independent chunks, prefer that structure over serial sequencing
 17. If the revised plan creates independent chunks, say so explicitly and note when `using-jj-workspaces` should be used to execute them in parallel
 18. Do not finalize revised plan content until the brainstorming walkthrough confirms human approval
+19. For JavaScript/TypeScript plans, if scope or contract coverage changes, update every affected `Phase Test Strategy` and `Phase Test Plan` so they still trace back to the approved Stage 7 testing guidance and remain consistent with `javascript-testing-expert`
 
 ### Step 5: Commit and Present Changes
 
@@ -146,6 +150,7 @@ Would you like any further adjustments?
 - **Preserve contract-test shape**: Plans should enumerate coverage for the full contract, but still instruct implementation to proceed one failing contract test at a time
 - **Preserve self-contained phases**: After edits, an agent given one phase in isolation should still have enough context to execute it correctly
 - **Preserve parallelism signals**: Keep explicit notes about what can run concurrently and when `using-jj-workspaces` should be used
+- **Preserve JavaScript/TypeScript testing traceability**: When revising a JS/TS plan, keep each affected phase's `Phase Test Strategy` and `Phase Test Plan` aligned with the approved Stage 7 testing strategy and `javascript-testing-expert`
 - **Preserve numbering symmetry**: If a contract is added, removed, or renumbered, update the matching checklist entries and related references in the same edit
 - **Preserve type safety in the spec**: If a revised contract introduces a new type, add or update the type definition so illegal states remain unrepresentable and branded/opaque types are used by default
 - **Iterate from a fresh change**: Start plan revisions with `jj new`, then use `jj describe` to summarize the plan changes you actually made

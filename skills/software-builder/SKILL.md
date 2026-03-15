@@ -31,7 +31,7 @@ Run stages in this order unless a later stage exposes a defect in earlier truth.
 4. Translate shape into draft spec with `translating-shape-to-spec`
 5. Define vertical, demoable increments with `slicing-work`
 6. Finalize functional behavior contract with `writing-functional-specs` after a `brainstorming` conversation with the human
-7. Finalize technical design with `designing-clean-architecture` and write code-level contracts with `writing-technical-specifications` after a `brainstorming` conversation with the human
+7. Finalize technical design with `designing-clean-architecture` and write code-level contracts with `writing-technical-specifications` after a `brainstorming` conversation with the human; for JavaScript/TypeScript work, add a dedicated contract-oriented testing strategy section informed by `javascript-testing-expert`
 8. Draft a slice-by-slice execution plan with `creating-implementation-plan` using the functional spec, technical spec, and slices
 9. Refine and lock the plan with `iterating-plans` after human review
 10. Implement one slice at a time with `subagent-driven-development` (which enforces `specification-driven-tdd`)
@@ -70,7 +70,7 @@ Every stage must produce or refresh a reviewable document artifact. Keep a stage
 4. Stage 4 (`translating-shape-to-spec`): Draft functional spec document
 5. Stage 5 (`slicing-work`): Slices document with dependency map
 6. Stage 6 (`writing-functional-specs`): Final functional spec document
-7. Stage 7 (`designing-clean-architecture` + `writing-technical-specifications`): Technical spec document with architecture decisions and code contracts (signatures, effects, data types)
+7. Stage 7 (`designing-clean-architecture` + `writing-technical-specifications`): Technical spec document with architecture decisions and code contracts (signatures, effects, data types), plus for JavaScript/TypeScript work a contract-oriented testing strategy section informed by `javascript-testing-expert`
 8. Stage 8 (`creating-implementation-plan`): Draft implementation plan document
 9. Stage 9 (`iterating-plans`): Finalized implementation plan document (or explicit revision of Stage 8 document)
 10. Stage 10 (`subagent-driven-development`): `stage-10-execution-log.md` and `stage-10-subagent-returns.md` (per-dispatch returns with budget and trace metadata)
@@ -133,8 +133,9 @@ Before finalizing Stage 6 and Stage 7 artifacts, run conversational back-and-for
 1. Use `brainstorming` to explore ambiguities, trade-offs, and edge cases with the human
 2. Present the proposed functional spec or technical spec sections
 3. For Stage 7, invoke `writing-technical-specifications` to draft code contracts in the technical spec, including function/module signatures, effects (outputs, side effects, and errors), and data type definitions/invariants
-4. Get explicit human approval of the proposed sections and contract set
-5. Only then finalize the corresponding artifact
+4. For JavaScript/TypeScript work, invoke `javascript-testing-expert` to add a dedicated contract-oriented testing strategy section to the Stage 7 artifact. Keep it high-level: observable behavior boundaries, determinism controls, where property-based testing is appropriate, component-vs-function stance, network/time/randomness handling, and anti-patterns to avoid. Do not enumerate concrete test cases.
+5. Get explicit human approval of the proposed sections and contract set
+6. Only then finalize the corresponding artifact
 
 Default behavior: Stage 6 and Stage 7 use `brainstorming` unless the user explicitly opts out.
 
@@ -147,13 +148,14 @@ Before implementation starts, Stage 8 and Stage 9 must produce a human-reviewed 
 3. Invoke `iterating-plans` to apply refinements surgically to the draft
 4. Invoke `brainstorming` again to walk through the revised plan and secure explicit approval
 5. Use the slices as the execution backbone
-6. Map each slice to functional behavior and technical contracts
+6. Map each slice to functional behavior and technical contracts, and for JavaScript/TypeScript work to the approved Stage 7 testing strategy
 7. Order slices by dependency so unblocked slices can be executed first
 8. Maximize safe parallelization by identifying slices that can run concurrently once prerequisites are satisfied
 9. Define workspace orchestration for parallel chunks, using `using-jj-workspaces` by default unless a shared workspace is explicitly justified
 10. Require a dependency and third-party delta inventory in the plan (new packages, package version bumps, test-runtime dependencies like `jsdom`, new external APIs, and new hosted services)
 11. Assign each dependency/service delta to the earliest slice that needs it; allow a dedicated enablement slice only when the dependency is shared by multiple later slices
 12. Require per-slice verification expectations before Stage 10
+13. For JavaScript/TypeScript work, require each slice to include a per-slice test strategy and a per-slice test plan derived from the Stage 7 testing strategy, using `javascript-testing-expert` through `creating-implementation-plan` and `iterating-plans`
 
 No Stage 10 work begins until this plan exists, is refined, and is explicitly approved.
 
@@ -189,10 +191,10 @@ Before each handoff, verify:
 - For Stage 1 -> Stage 2, human teach-back of both problem and desired outcome is captured and aligned
 - For Stage 3 -> Stage 4, conversational breadboarding review is complete and Stage 3 has explicit human approval (or explicit user opt-out to non-conversational mode)
 - For Stage 5 -> Stage 6, brainstorming-based human review of functional spec sections is complete
-- For Stage 6 -> Stage 7, brainstorming-based human review of technical design sections is complete and `writing-technical-specifications` contracts are present (signatures, effects, data types)
-- For Stage 7 -> Stage 8, technical design and code contracts are explicit and approved
-- For Stage 8 -> Stage 9, the draft implementation plan exists and has completed a brainstorming walkthrough with captured human feedback
-- For Stage 9 -> Stage 10, the iterated plan is explicitly approved through brainstorming and maps each slice to functional and technical contracts, identifies parallelizable slices/chunks, defines a `using-jj-workspaces` strategy for parallel work, and includes a dependency/service delta map with explicit per-slice ownership and verification commands
+- For Stage 6 -> Stage 7, brainstorming-based human review of technical design sections is complete, `writing-technical-specifications` contracts are present (signatures, effects, data types), and for JavaScript/TypeScript work a contract-oriented testing strategy informed by `javascript-testing-expert` is present
+- For Stage 7 -> Stage 8, technical design and code contracts are explicit and approved, and for JavaScript/TypeScript work the approved testing strategy section is linked in the Stage 7 artifact
+- For Stage 8 -> Stage 9, the draft implementation plan exists, has completed a brainstorming walkthrough with captured human feedback, and for JavaScript/TypeScript work includes per-slice test strategy and per-slice test plan sections traced back to Stage 7 testing guidance
+- For Stage 9 -> Stage 10, the iterated plan is explicitly approved through brainstorming and maps each slice to functional and technical contracts, identifies parallelizable slices/chunks, defines a `using-jj-workspaces` strategy for parallel work, includes a dependency/service delta map with explicit per-slice ownership and verification commands, and for JavaScript/TypeScript work preserves per-slice test strategy and per-slice test plan sections derived from the Stage 7 testing strategy
 - For Stage 10 -> Stage 11, `stage-10-execution-log.md` and `stage-10-subagent-returns.md` exist and are linked from `stage-subagent-returns.md`
 
 Stop forward progress when artifacts disagree.
@@ -210,7 +212,9 @@ Stop forward progress when artifacts disagree.
 - Do not finalize Stage 3 without conversational breadboarding review and explicit approval unless the user explicitly opts out
 - Do not finalize functional spec or technical design without brainstorming-based human back-and-forth and approval
 - Do not finalize Stage 7 without `writing-technical-specifications`-style code contracts (function/module signatures, effects, and data type definitions)
+- Do not finalize Stage 7 for JavaScript/TypeScript work without an approved contract-oriented testing strategy section informed by `javascript-testing-expert`
 - Do not finalize Stage 8 or Stage 9 without brainstorming-based human walkthrough and explicit approval
+- Do not finalize Stage 8 or Stage 9 for JavaScript/TypeScript work without per-slice test strategy and per-slice test plan sections derived from the Stage 7 testing strategy
 - Do not start implementation without an iterated slice-by-slice implementation plan that traces to functional and technical specs
 - Do not start implementation when dependency or third-party deltas are implied but not declared in the plan
 - Do not add new dependencies or third-party services in a slice unless that slice (or an explicitly justified shared enablement slice) owns the change and its verification
@@ -233,6 +237,7 @@ Use these existing skills as the default delegates:
 - `breadboarding` (fallback when a non-conversational breadboarding mode is explicitly requested)
 - `brainstorming` (default for Stage 3 and Stage 6 through Stage 9 collaborative review)
 - `designing-clean-architecture`
+- `javascript-testing-expert`
 - `writing-technical-specifications`
 - `creating-implementation-plan`
 - `iterating-plans`

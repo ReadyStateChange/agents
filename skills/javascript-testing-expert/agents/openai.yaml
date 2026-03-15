@@ -1,0 +1,4 @@
+interface:
+  display_name: "JS Testing Expert"
+  short_description: "Write and review robust JavaScript function and component tests"
+  default_prompt: "Use $javascript-testing-expert to write or review JavaScript tests for functions or components, favoring deterministic example-based and property-based coverage with the project's existing tooling. Exclude black-box e2e testing unless the user explicitly redirects."

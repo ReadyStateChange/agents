@@ -1,4 +1,4 @@
 interface:
   display_name: "Software Builder"
   short_description: "Run stage-gated software delivery from idea to accepted slices"
-  default_prompt: "Use $software-builder to orchestrate the full lifecycle, delegate Stage 1-9 work to stage agents, enforce bounded nested delegation for Stage 10, and persist budget + trace telemetry for every delegate return in markdown ledgers."
+  default_prompt: "Use $software-builder to orchestrate the full lifecycle, delegate Stage 1-9 work to stage agents, require JavaScript/TypeScript technical specs and plans to carry approved testing guidance from $javascript-testing-expert, enforce bounded nested delegation for Stage 10, and persist budget + trace telemetry for every delegate return in markdown ledgers."

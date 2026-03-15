@@ -1,6 +1,6 @@
 ---
 name: implementer
-description: Implements a single approved plan task under controller supervision. Follows specification-driven-tdd, appends to the stage-10 execution log on completion, and returns a structured status with budget/trace metadata without creating commits, moving bookmarks, or updating the plan.
+description: Implements a single approved plan task under controller supervision. Follows specification-driven-tdd, honors approved JavaScript/TypeScript testing guidance when provided, appends to the stage-10 execution log on completion, and returns a structured status with budget/trace metadata without creating commits, moving bookmarks, or updating the plan.
 tools: Read, Grep, Glob, LS, Edit, MultiEdit, Write, Bash
 model: sonnet
 ---

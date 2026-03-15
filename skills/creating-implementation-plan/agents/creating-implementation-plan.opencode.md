@@ -1,5 +1,5 @@
 ---
-description: "Builds a slice-first implementation plan tied to functional and technical contracts."
+description: "Builds a slice-first implementation plan tied to functional and technical contracts, including JavaScript/TypeScript per-slice testing guidance when applicable."
 mode: subagent
 model: opencode/claude-sonnet-4-6
 ---
