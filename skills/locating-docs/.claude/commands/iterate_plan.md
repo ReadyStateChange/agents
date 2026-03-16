@@ -74,8 +74,8 @@ If the user's feedback requires understanding new code patterns or validating as
    - **codebase-pattern-finder** - To find similar patterns
 
    **For historical context:**
-   - **thoughts-locator** - To find related research or decisions
-   - **thoughts-analyzer** - To extract insights from documents
+   - **docs-locator** - To find related research or decisions
+   - **docs-analyzer** - To extract insights from documents
 
    **Be EXTREMELY specific about directories**:
    - Specify the exact directory path for the component being changed

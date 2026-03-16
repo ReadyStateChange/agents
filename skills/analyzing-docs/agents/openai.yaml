@@ -1,0 +1,4 @@
+interface:
+  display_name: "Docs Analyzer"
+  short_description: "Extract decisions, constraints, and gotchas from docs"
+  default_prompt: "Use $analyzing-docs to extract the important decisions, constraints, and actionable insights from existing project documents. Filter aggressively and call out what is still open or likely superseded."

@@ -1,5 +1,5 @@
 ---
-name: analyzing-thoughts
+name: analyzing-docs
 description: "Extracts key decisions, constraints, and actionable insights from documents. Use when you say: 'what did we decide about...', 'summarize this plan', 'extract the gotchas from prior research', 'what are the constraints from...'."
 allowed-tools:
   - finder

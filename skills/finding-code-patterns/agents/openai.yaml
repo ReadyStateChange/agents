@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Pattern Finder"
+  short_description: "Find similar implementations and examples"
+  default_prompt: "Use $finding-code-patterns to find similar implementations and concrete examples in the current codebase. Show multiple variants when they exist and include file references for each."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Web Researcher"
+  short_description: "Research current external docs and sources with citations"
+  default_prompt: "Use $web-research to answer questions that depend on current external information. Prefer primary sources, include direct links, note versions or dates when relevant, and distinguish facts from inference."

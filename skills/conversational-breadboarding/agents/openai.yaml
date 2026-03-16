@@ -1,4 +1,4 @@
 interface:
-  display_name: "Conversational Breadboarding Delegate"
-  short_description: "Run human-in-the-loop breadboarding with explicit approval"
-  default_prompt: "Use $conversational-breadboarding to iteratively build affordance tables with human review and explicit approval. Return using the software-builder subagent return contract with Status, Artifact updates, Budget snapshot, Trace metadata, Verification references, and Next action."
+  display_name: "Conversational Breadboarding Interviewer"
+  short_description: "Interview to build a human-authored breadboard with approval"
+  default_prompt: "Use $conversational-breadboarding to run an interviewer-only breadboarding conversation. Keep substantive artifact content sourced from human answers, overwrite changed cells in place, append revision-log entries, and finalize only after explicit human approval. If the human asks a codebase, document, or web question, pause to answer it with evidence using the appropriate research skill, then ask whether the artifact should change before resuming. Return using the software-builder subagent return contract with Status, Artifact updates, Budget snapshot, Trace metadata, Verification references, and Next action."

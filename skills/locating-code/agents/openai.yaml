@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Locator"
+  short_description: "Find where relevant code lives"
+  default_prompt: "Use $locating-code to find the files, directories, tests, and entry points relevant to the current feature or question. Group results by purpose and keep the answer focused on navigation."

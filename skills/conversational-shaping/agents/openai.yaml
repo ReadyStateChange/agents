@@ -1,4 +1,4 @@
 interface:
-  display_name: "Conversational Shaping Delegate"
-  short_description: "Run human-led shaping with teach-back gate"
-  default_prompt: "Use $conversational-shaping to run a one-question-at-a-time shaping conversation and finalize a teach-back validated shaping artifact. Return using the software-builder subagent return contract with Status, Artifact updates, Budget snapshot, Trace metadata, Verification references, and Next action."
+  display_name: "Conversational Shaping Interviewer"
+  short_description: "Interview to build a human-authored shaping doc with teach-back"
+  default_prompt: "Use $conversational-shaping to run an interviewer-only, one-question-at-a-time shaping conversation. Keep substantive artifact content sourced from human answers, overwrite changed cells in place, append revision-log entries, and finish only after teach-back passes. If the human asks a codebase, document, or web question, pause to answer it with evidence using the appropriate research skill, then ask whether the artifact should change before resuming. Return using the software-builder subagent return contract with Status, Artifact updates, Budget snapshot, Trace metadata, Verification references, and Next action."

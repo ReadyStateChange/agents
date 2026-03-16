@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codebase Researcher"
+  short_description: "Explain how the current codebase works with evidence"
+  default_prompt: "Use $researching-codebases to answer questions about how the current codebase works today. Cite concrete file references, separate observed facts from inference, and avoid recommending changes unless explicitly asked."

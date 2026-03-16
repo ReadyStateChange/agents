@@ -1,5 +1,5 @@
 ---
-name: locating-thoughts
+name: locating-docs
 description: "Finds relevant research, plan, and decision documents in the project. Use when you say: 'do we already have a plan for...', 'find prior decisions about...', 'look for previous research or design notes'."
 allowed-tools:
   - finder

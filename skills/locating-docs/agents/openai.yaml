@@ -1,0 +1,4 @@
+interface:
+  display_name: "Docs Locator"
+  short_description: "Find prior plans, research, and decision docs"
+  default_prompt: "Use $locating-docs to find relevant plans, research notes, ADRs, and other project documents for the current question. Group results by type and keep the answer focused on discoverability rather than deep analysis."
